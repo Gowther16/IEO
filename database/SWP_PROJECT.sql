@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [SWP_PROJECT]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 CREATE DATABASE [SWP_PROJECT]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -82,13 +82,13 @@ ALTER DATABASE [SWP_PROJECT] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEAN
 GO
 USE [SWP_PROJECT]
 GO
-/****** Object:  Table [dbo].[Answer_Listening_ChooseAnswer]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Answer_Listening_ChooseAnswer](
-	[answer_id] [int] NOT NULL,
+	[answer_id] [int] identity(1,1) NOT NULL,
 	[questListen_id] [int] NOT NULL,
 	[test_id] [int] NOT NULL,
 	[content_Answer] [text] NOT NULL,
@@ -98,13 +98,13 @@ CREATE TABLE [dbo].[Answer_Listening_ChooseAnswer](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Answer_Listening_Write]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Answer_Listening_Write](
-	[answer_id] [int] NOT NULL,
+	[answer_id] [int] identity(1,1) NOT NULL,
 	[quest_Listen] [int] NOT NULL,
 	[test_id] [int] NOT NULL,
 	[content_Answer] [text] NOT NULL,
@@ -114,13 +114,13 @@ CREATE TABLE [dbo].[Answer_Listening_Write](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Answer_Reading]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Answer_Reading](
-	[answer_id] [int] NOT NULL,
+	[answer_id] [int] identity(1,1) NOT NULL,
 	[questRead_id] [int] NOT NULL,
 	[test_id] [int] NOT NULL,
 	[content_Answer] [text] NOT NULL,
@@ -130,13 +130,13 @@ CREATE TABLE [dbo].[Answer_Reading](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Answer_Speaking]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Answer_Speaking](
-	[answer_id] [int] NOT NULL,
+	[answer_id] [int] identity(1,1) NOT NULL,
 	[quest_Speak] [int] NOT NULL,
 	[duration_do] [int] NOT NULL,
 	[test_id] [int] NOT NULL,
@@ -147,13 +147,13 @@ CREATE TABLE [dbo].[Answer_Speaking](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Answer_Writing]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Answer_Writing](
-	[answer_id] [int] NOT NULL,
+	[answer_id] [int] identity(1,1) NOT NULL,
 	[write_id] [int] NOT NULL,
 	[duration_do] [int] NOT NULL,
 	[test_id] [int] NOT NULL,
@@ -164,13 +164,13 @@ CREATE TABLE [dbo].[Answer_Writing](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[BrandPoint_Speaking]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[BrandPoint_Speaking](
-	[brand_id] [int] NOT NULL,
+	[brand_id] [int] identity(1,1) NOT NULL,
 	[quest_id] [int] NOT NULL,
 	[BrandPoint] [text] NOT NULL,
  CONSTRAINT [PK_BrandPoint_Speaking] PRIMARY KEY CLUSTERED 
@@ -179,13 +179,13 @@ CREATE TABLE [dbo].[BrandPoint_Speaking](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[BrandPoint_Writing]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[BrandPoint_Writing](
-	[brand_id] [int] NOT NULL,
+	[brand_id] [int] identity(1,1) NOT NULL,
 	[quest_id] [int] NOT NULL,
 	[BrandPoint] [text] NOT NULL,
  CONSTRAINT [PK_BrandPoint_Writing] PRIMARY KEY CLUSTERED 
@@ -194,13 +194,13 @@ CREATE TABLE [dbo].[BrandPoint_Writing](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Device_Readiness_Checks]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Device_Readiness_Checks](
-	[check_id] [int] NOT NULL,
+	[check_id] [int] identity(1,1) NOT NULL,
 	[user_id] [int] NOT NULL,
 	[network_status] [varchar](255) NOT NULL,
 	[device_status] [varchar](255) NOT NULL,
@@ -211,13 +211,13 @@ CREATE TABLE [dbo].[Device_Readiness_Checks](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Exam_Notifications]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Exam_Notifications](
-	[notification_id] [int] NOT NULL,
+	[notification_id] [int] identity(1,1) NOT NULL,
 	[test_id] [int] NOT NULL,
 	[message] [text] NOT NULL,
 	[sent_at] [timestamp] NOT NULL,
@@ -227,13 +227,31 @@ CREATE TABLE [dbo].[Exam_Notifications](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Help_Center_FAQs]    Script Date: 16/02/2025 9:08:27 CH ******/
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+Create table [dbo].[ForgetPassword](
+[fp_id] [int] identity(1,1) NOT NULL,
+[token] [varchar](255) NOT NULL,
+[expiryTime] [TimeStamp] NOT NULL,
+[isUsed] [bit] NOT NULL,
+[user_id] [int] NOT NULL,
+ CONSTRAINT [PK_ForgetPassword] PRIMARY KEY CLUSTERED 
+(
+	[fp_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Help_Center_FAQs](
-	[faq_id] [int] NOT NULL,
+	[faq_id] [int] identity(1,1) NOT NULL,
 	[user_id] [int] NOT NULL,
 	[question] [text] NOT NULL,
 	[answer] [text] NOT NULL,
@@ -243,13 +261,13 @@ CREATE TABLE [dbo].[Help_Center_FAQs](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Listening]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Listening](
-	[listen_id] [int] NOT NULL,
+	[listen_id] [int] identity(1,1) NOT NULL,
 	[topic_id] [int] NOT NULL,
 	[duration] [int] NOT NULL,
 	[Video_listen] [text] NOT NULL,
@@ -259,13 +277,13 @@ CREATE TABLE [dbo].[Listening](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Listening_Write]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Listening_Write](
-	[PointListenWrite_id] [int] NOT NULL,
+	[PointListenWrite_id] [int] identity(1,1) NOT NULL,
 	[Coord_id] [int] NOT NULL,
 	[True_False] [int] NOT NULL,
 	[answer_id] [int] NOT NULL,
@@ -275,13 +293,13 @@ CREATE TABLE [dbo].[Listening_Write](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Point_Listening]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Point_Listening](
-	[point_id] [int] NOT NULL,
+	[point_id] [int] identity(1,1) NOT NULL,
 	[Coord_id] [int] NOT NULL,
 	[mark] [int] NOT NULL,
 	[result_id] [int] NOT NULL,
@@ -291,13 +309,13 @@ CREATE TABLE [dbo].[Point_Listening](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Point_Reading]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Point_Reading](
-	[point_id] [int] NOT NULL,
+	[point_id] [int] identity(1,1) NOT NULL,
 	[Coord_id] [int] NOT NULL,
 	[mark] [int] NOT NULL,
 	[result_id] [int] NULL,
@@ -307,13 +325,13 @@ CREATE TABLE [dbo].[Point_Reading](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Point_Speaking]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Point_Speaking](
-	[point_id] [int] NOT NULL,
+	[point_id] [int] identity(1,1) NOT NULL,
 	[Coord_id] [int] NOT NULL,
 	[mark] [int] NOT NULL,
 	[result_id] [int] NOT NULL,
@@ -323,13 +341,13 @@ CREATE TABLE [dbo].[Point_Speaking](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Point_Writing]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Point_Writing](
-	[point_id] [int] NOT NULL,
+	[point_id] [int] identity(1,1) NOT NULL,
 	[Coord_id] [int] NOT NULL,
 	[mark] [int] NOT NULL,
 	[answer_id] [int] NOT NULL,
@@ -340,13 +358,13 @@ CREATE TABLE [dbo].[Point_Writing](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Question_Listening_Write]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Question_Listening_Write](
-	[quest_Listen] [int] NOT NULL,
+	[quest_Listen] [int] identity(1,1) NOT NULL,
 	[listen_id] [int] NOT NULL,
 	[question_text] [text] NOT NULL,
  CONSTRAINT [PK_Question_Listening_Write] PRIMARY KEY CLUSTERED 
@@ -355,13 +373,13 @@ CREATE TABLE [dbo].[Question_Listening_Write](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Question_Speaking]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Question_Speaking](
-	[quest_Speak] [int] NOT NULL,
+	[quest_Speak] [int] identity(1,1) NOT NULL,
 	[speak_id] [int] NOT NULL,
 	[question_text] [text] NOT NULL,
  CONSTRAINT [PK_Question_Speaking] PRIMARY KEY CLUSTERED 
@@ -370,13 +388,13 @@ CREATE TABLE [dbo].[Question_Speaking](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Questions_Listening_ChooseAnswer]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Questions_Listening_ChooseAnswer](
-	[questListen_id] [int] NOT NULL,
+	[questListen_id] [int] identity(1,1) NOT NULL,
 	[question_text] [text] NOT NULL,
 	[answer_options] [text] NOT NULL,
 	[correct_answer] [text] NOT NULL,
@@ -388,13 +406,13 @@ CREATE TABLE [dbo].[Questions_Listening_ChooseAnswer](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Questions_Reading]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Questions_Reading](
-	[questRead_id] [int] NOT NULL,
+	[questRead_id] [int] identity(1,1) NOT NULL,
 	[question_text] [text] NOT NULL,
 	[answer_options] [text] NOT NULL,
 	[correct_answer] [text] NOT NULL,
@@ -406,13 +424,13 @@ CREATE TABLE [dbo].[Questions_Reading](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Reading]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Reading](
-	[read_id] [int] NOT NULL,
+	[read_id] [int] identity(1,1) NOT NULL,
 	[topic_id] [int] NOT NULL,
 	[duration] [int] NOT NULL,
 	[Title] [varchar](250) NOT NULL,
@@ -423,13 +441,13 @@ CREATE TABLE [dbo].[Reading](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Role]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Role](
-	[user_id] [int] NOT NULL,
+	[user_id] [int] identity(1,1) NOT NULL,
 	[role] [int] NOT NULL,
  CONSTRAINT [PK_Role] PRIMARY KEY CLUSTERED 
 (
@@ -437,13 +455,13 @@ CREATE TABLE [dbo].[Role](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Speaking]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Speaking](
-	[speak_id] [int] NOT NULL,
+	[speak_id] [int] identity(1,1) NOT NULL,
 	[topic_id] [int] NOT NULL,
 	[duration] [int] NOT NULL,
  CONSTRAINT [PK_Speaking] PRIMARY KEY CLUSTERED 
@@ -452,13 +470,13 @@ CREATE TABLE [dbo].[Speaking](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Student_Results]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Student_Results](
-	[result_id] [int] NOT NULL,
+	[result_id] [int] identity(1,1) NOT NULL,
 	[user_id] [int] NOT NULL,
 	[test_id] [int] NOT NULL,
 	[score] [int] NOT NULL,
@@ -469,13 +487,13 @@ CREATE TABLE [dbo].[Student_Results](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[System_Update]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[System_Update](
-	[update_id] [int] NOT NULL,
+	[update_id] [int] identity(1,1) NOT NULL,
 	[update_title] [varchar](255) NOT NULL,
 	[update_description] [text] NOT NULL,
 	[it_id] [int] NOT NULL,
@@ -486,13 +504,13 @@ CREATE TABLE [dbo].[System_Update](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Tests]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Tests](
-	[test_id] [int] NOT NULL,
+	[test_id] [int] identity(1,1) NOT NULL,
 	[test_name] [varchar](255) NOT NULL,
 	[description] [text] NOT NULL,
 	[test_exist] [int] NOT NULL,
@@ -504,13 +522,13 @@ CREATE TABLE [dbo].[Tests](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Topic_Exam]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Topic_Exam](
-	[topic_id] [int] NOT NULL,
+	[topic_id] [int] identity(1,1) NOT NULL,
 	[create_id] [int] NOT NULL,
  CONSTRAINT [PK_Topic_Exam] PRIMARY KEY CLUSTERED 
 (
@@ -518,13 +536,13 @@ CREATE TABLE [dbo].[Topic_Exam](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Users]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Users](
-	[user_id] [int] NOT NULL,
+	[user_id] [int] identity(1,1) NOT NULL,
 	[full_name] [varchar](255) NOT NULL,
 	[email] [varchar](255) NOT NULL,
 	[password] [varchar](255) NOT NULL,
@@ -537,13 +555,13 @@ CREATE TABLE [dbo].[Users](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Writing]    Script Date: 16/02/2025 9:08:27 CH ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Writing](
-	[write_id] [int] NOT NULL,
+	[write_id] [int] identity(1,1) NOT NULL,
 	[topic_id] [int] NOT NULL,
 	[duration] [int] NOT NULL,
 	[Title] [varchar](250) NOT NULL,
@@ -627,6 +645,11 @@ ALTER TABLE [dbo].[Exam_Notifications]  WITH CHECK ADD  CONSTRAINT [FK_Exam_Noti
 REFERENCES [dbo].[Tests] ([test_id])
 GO
 ALTER TABLE [dbo].[Exam_Notifications] CHECK CONSTRAINT [FK_Exam_Notifications_Tests]
+GO
+ALTER TABLE [dbo].[ForgetPassword]  WITH CHECK ADD  CONSTRAINT [FK_Users_ForgetPassword] FOREIGN KEY([user_id])
+REFERENCES [dbo].[Users] ([user_id])
+GO
+ALTER TABLE [dbo].[ForgetPassword] CHECK CONSTRAINT [FK_Users_ForgetPassword]
 GO
 ALTER TABLE [dbo].[Help_Center_FAQs]  WITH CHECK ADD  CONSTRAINT [FK_Help_Center_FAQs_Users] FOREIGN KEY([user_id])
 REFERENCES [dbo].[Users] ([user_id])
@@ -753,10 +776,10 @@ REFERENCES [dbo].[Users] ([user_id])
 GO
 ALTER TABLE [dbo].[Topic_Exam] CHECK CONSTRAINT [FK_Topic_Exam_Users]
 GO
-ALTER TABLE [dbo].[Users]  WITH CHECK ADD  CONSTRAINT [FK_Users_Role] FOREIGN KEY([user_id])
-REFERENCES [dbo].[Role] ([user_id])
+ALTER TABLE [dbo].[Role]  WITH CHECK ADD  CONSTRAINT [FK_Users_Role] FOREIGN KEY([user_id])
+REFERENCES [dbo].[Users] ([user_id])
 GO
-ALTER TABLE [dbo].[Users] CHECK CONSTRAINT [FK_Users_Role]
+ALTER TABLE [dbo].[Role] CHECK CONSTRAINT [FK_Users_Role]
 GO
 ALTER TABLE [dbo].[Writing]  WITH CHECK ADD  CONSTRAINT [FK_Writing_Topic_Exam] FOREIGN KEY([topic_id])
 REFERENCES [dbo].[Topic_Exam] ([topic_id])
@@ -767,3 +790,7 @@ USE [master]
 GO
 ALTER DATABASE [SWP_PROJECT] SET  READ_WRITE 
 GO
+
+
+
+
