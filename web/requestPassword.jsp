@@ -39,7 +39,7 @@
                 <% } %>
 
                 <% if (request.getAttribute("success") != null) { %>
-                <div class="alert alert-danger">
+                <div class="alert alert-success">
                     <%= request.getAttribute("success") %>  
                 </div>
                 <% } %>

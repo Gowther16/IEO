@@ -152,6 +152,43 @@ public class UserDAO extends DBContext {
         } catch (Exception e) {
             System.out.println("Error getting user by email: " + e.getMessage());
             e.printStackTrace();
+        }
+        return null;
+    }
+    
+     public User getUserById(int Id) {
+        String sql = "Select * from [Users] where user_id = ?";
+        try {
+            // Khởi tạo connection
+            con = new DBContext().getConnection();
+            if (con == null) {
+                System.out.println("Failed to get database connection in getUserById");
+                return null;
+            }
+            
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, Id);
+            rs = ps.executeQuery();
+            
+            System.out.println("Executing getUserById for ID: " + Id);
+            
+            if (rs.next()) {
+                User user = new User(
+                    rs.getInt(1),
+                    rs.getString(2), 
+                    rs.getString(3), 
+                    rs.getString(4),
+                    rs.getDate(5),
+                    rs.getDate(6)
+                );
+                System.out.println("Found user with ID: " + Id);
+                return user;
+            } else {
+                System.out.println("No user found with ID: " + Id);
+            }
+        } catch (Exception e) {
+            System.out.println("Error in getUserById: " + e.getMessage());
+            e.printStackTrace();
         } finally {
             try {
                 if (rs != null) rs.close();
@@ -163,29 +200,6 @@ public class UserDAO extends DBContext {
         }
         return null;
     }
-    
-     public User getUserById(int Id) {
-        String sql = "Select * from [Users] where id = ?";
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, Id);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {                
-                return new User(
-                        rs.getInt(1),
-                        rs.getString(2), 
-                        rs.getString(3), 
-                        rs.getString(4),
-                        rs.getDate(5),
-                        rs.getDate(6));
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return null;
-    }
-    
-
 
     private int updateLastLoginTime(int userId) {
         String sql = "UPDATE Users SET lastLogin = ? WHERE Id = ?";
@@ -203,44 +217,27 @@ public class UserDAO extends DBContext {
         } catch (Exception e) {
             System.out.println("Error at updateLastLogin: " + e.getMessage());
             e.printStackTrace();
-        } finally {
-            try {
-                if (ps != null) ps.close();
-                if (con != null) con.close();
-            } catch (Exception e) {
-                System.out.println("Error closing connections: " + e.getMessage());
-            }
+        
         }
         return 0;
     }
 
-    public User updatePassword(String email, String newPassword) {
-        User user = getUserByEmail(email);
-        if (user == null) {
-            return null;
-        }
+    public void updatePassword(String email, String newPassword) {
+     
 
-        String sql = "UPDATE Users SET password = ? WHERE email = ?";
+        String sql = "UPDATE [Users] SET [password] = ? WHERE [email] = ?";
         try {
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             ps.setString(1, newPassword);
             ps.setString(2, email);
             int result = ps.executeUpdate();
-            if (result > 0) {
-                user.setPassword(newPassword);
-                return user;
-            }
+           
         } catch (Exception e) {
             System.out.println("Error updating password: " + e.getMessage());
-        } finally {
-            try {
-                if (ps != null) ps.close();
-                if (con != null) con.close();
-            } catch (Exception e) {
-                System.out.println("Error closing connections: " + e.getMessage());
-            }
+       
+           
         }
-        return null;
     }
+    
 }

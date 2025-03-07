@@ -109,9 +109,8 @@ public class RequestPasswordServlet extends HttpServlet {
             return;
         }
      
-        request.setAttribute("success","Send request success!" );
-        
-        request.getRequestDispatcher("resetPassword.jsp").forward(request, response);
+        request.setAttribute("success","Send request success! Please check your mail." );       
+        request.getRequestDispatcher("requestPassword.jsp").forward(request, response);
     }
 
     /**

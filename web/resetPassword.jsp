@@ -22,7 +22,12 @@
         <div id="formContent">
             <h2 class="active">Reset Password</h2>
             
-            <form action="reset_password" method="post" id="resetPasswordForm">
+            <form action="resetPassword" method="post" id="resetPasswordForm">
+                   <% if (request.getAttribute("mess") != null) { %>
+                <div class="alert alert-danger">
+                    <%= request.getAttribute("mess") %>  
+                </div>
+                <% } %>
                 <input type="email" id="email" name="email" value="${email}" placeholder="Email" required>
                 
                 <div class="password-container">
