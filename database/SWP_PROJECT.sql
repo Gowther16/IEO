@@ -505,16 +505,34 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Tests](
 	[test_id] [int] identity(1,1) NOT NULL,
-	[test_name] [varchar](255) NOT NULL,
-	[description] [text] NOT NULL,
+	[student_name] [varchar](255) NOT NULL,
+	[email] [varchar](255) NOT NULL,
 	[test_exist] [int] NOT NULL,
 	[user_id] [int] NOT NULL,
-	[topic_id] [int] NOT NULL,
+	[exam_id] [int] NOT NULL,
  CONSTRAINT [PK_Tests] PRIMARY KEY CLUSTERED 
 (
 	[test_id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Exam](
+	[exam_id] [int] identity(1,1) NOT NULL,
+	[test_name] [varchar](255) NOT NULL,
+	[description] [text] NOT NULL,
+	[time_exam] [int] NOT NULL,
+	[create_id] [int] NOT NULL,
+	[topic_id] [int] NOT NULL,
+ CONSTRAINT [PK_Exam] PRIMARY KEY CLUSTERED 
+(
+	[exam_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
 GO
 
 SET ANSI_NULLS ON
@@ -576,7 +594,7 @@ Create table [dbo].[Page_Inform](
 [Title] [text] NOT NULL,
 [content] [text] NOT NULL,
 [t_id] [int] NOT NULL,
- CONSTRAINT [PK_ForgetPassword] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_Page_Inform] PRIMARY KEY CLUSTERED 
 (
 	[pi_id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
@@ -592,7 +610,7 @@ Create table [dbo].[Document](
 [Title] [text] NOT NULL,
 [content] [text] NOT NULL,
 [t_id] [int] NOT NULL,
- CONSTRAINT [PK_ForgetPassword] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_Document] PRIMARY KEY CLUSTERED 
 (
 	[d_id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
@@ -606,10 +624,168 @@ GO
 Create table [dbo].[Type_Information](
 [t_id] [int] identity(1,1) NOT NULL,
 [createTime] [datetime] DEFAULT CURRENT_TIMESTAMP,
+[t_tile] [text] NOT NULL,
+[hashtag] [text] NULL,
 [user_id] [int] NOT NULL,
- CONSTRAINT [PK_ForgetPassword] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_Type_Information] PRIMARY KEY CLUSTERED 
 (
 	[t_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[Practice_Questions_Reading](
+	[questRead_id] [int] identity(1,1) NOT NULL,
+	[question_text] [text] NOT NULL,
+	[answer_options] [text] NOT NULL,
+	[correct_answer] [text] NOT NULL,
+	[explanation] [text] NULL,
+	[read_id] [int] NOT NULL,
+ CONSTRAINT [PK_Practice_Questions_Reading] PRIMARY KEY CLUSTERED 
+(
+	[questRead_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Practice_Reading](
+	[read_id] [int] identity(1,1) NOT NULL,
+	[practice_id] [int] NOT NULL,
+	[duration] [int] NOT NULL,
+	[Title] [varchar](250) NOT NULL,
+	[Content] [text] NOT NULL,
+ CONSTRAINT [PK_Practice_Reading] PRIMARY KEY CLUSTERED 
+(
+	[read_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Practice_Speaking](
+	[speak_id] [int] identity(1,1) NOT NULL,
+	[practice_id] [int] NOT NULL,
+	[duration] [int] NOT NULL,
+ CONSTRAINT [PK_Practice_Speaking] PRIMARY KEY CLUSTERED 
+(
+	[speak_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Practice_Question_Speaking](
+	[quest_Speak] [int] identity(1,1) NOT NULL,
+	[speak_id] [int] NOT NULL,
+	[question_text] [text] NOT NULL,
+ CONSTRAINT [PK_Practice_Question_Speaking] PRIMARY KEY CLUSTERED 
+(
+	[quest_Speak] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Practice_BrandPoint_Speaking](
+	[brand_id] [int] identity(1,1) NOT NULL,
+	[quest_id] [int] NOT NULL,
+	[BrandPoint] [text] NOT NULL,
+ CONSTRAINT [PK_Practice_BrandPoint_Speaking] PRIMARY KEY CLUSTERED 
+(
+	[brand_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Practice_Listening](
+	[listen_id] [int] identity(1,1) NOT NULL,
+	[practice_id] [int] NOT NULL,
+	[duration] [int] NOT NULL,
+	[Video_listen] [text] NOT NULL,
+ CONSTRAINT [PK_Practice_Listening] PRIMARY KEY CLUSTERED 
+(
+	[listen_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Practice_Questions_Listening](
+	[questListen_id] [int] identity(1,1) NOT NULL,
+	[question_text] [text] NOT NULL,
+	[answer_options] [text] NOT NULL,
+	[correct_answer] [text] NOT NULL,
+	[explanation] [text] NULL,
+	[listen_id] [int] NOT NULL,
+ CONSTRAINT [PK_Practice_Questions_Listening] PRIMARY KEY CLUSTERED 
+(
+	[questListen_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Practice_BrandPoint_Writing](
+	[brand_id] [int] identity(1,1) NOT NULL,
+	[quest_id] [int] NOT NULL,
+	[BrandPoint] [text] NOT NULL,
+ CONSTRAINT [PK_Practice_BrandPoint_Writing] PRIMARY KEY CLUSTERED 
+(
+	[brand_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Practice_Writing](
+	[write_id] [int] identity(1,1) NOT NULL,
+	[practice_id] [int] NOT NULL,
+	[duration] [int] NOT NULL,
+	[Title] [varchar](250) NOT NULL,
+	[Content] [text] NOT NULL,
+ CONSTRAINT [PK_Practice_Writing] PRIMARY KEY CLUSTERED 
+(
+	[write_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Practice_Exam](
+	[practice_id] [int] identity(1,1) NOT NULL,
+	[create_id] [int] NOT NULL,
+ CONSTRAINT [PK_Practice_Exam] PRIMARY KEY CLUSTERED 
+(
+	[practice_id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -803,15 +979,25 @@ REFERENCES [dbo].[Users] ([user_id])
 GO
 ALTER TABLE [dbo].[System_Update] CHECK CONSTRAINT [FK_System_Update_Users]
 GO
-ALTER TABLE [dbo].[Tests]  WITH CHECK ADD  CONSTRAINT [FK_Tests_Topic_Exam] FOREIGN KEY([topic_id])
+ALTER TABLE [dbo].[Tests]  WITH CHECK ADD  CONSTRAINT [FK_Tests_Exam] FOREIGN KEY([exam_id])
+REFERENCES [dbo].[Exam] ([exam_id])
+GO
+ALTER TABLE [dbo].[Tests] CHECK CONSTRAINT [FK_Tests_Exam]
+GO
+ALTER TABLE [dbo].[Exam]  WITH CHECK ADD  CONSTRAINT [FK_Exam_Topic_Exam] FOREIGN KEY([topic_id])
 REFERENCES [dbo].[Topic_Exam] ([topic_id])
 GO
-ALTER TABLE [dbo].[Tests] CHECK CONSTRAINT [FK_Tests_Topic_Exam]
+ALTER TABLE [dbo].[Exam] CHECK CONSTRAINT [FK_Exam_Topic_Exam]
 GO
 ALTER TABLE [dbo].[Tests]  WITH CHECK ADD  CONSTRAINT [FK_Tests_Users] FOREIGN KEY([user_id])
 REFERENCES [dbo].[Users] ([user_id])
 GO
 ALTER TABLE [dbo].[Tests] CHECK CONSTRAINT [FK_Tests_Users]
+GO
+ALTER TABLE [dbo].[Exam]  WITH CHECK ADD  CONSTRAINT [FK_Exam_Users] FOREIGN KEY([create_id])
+REFERENCES [dbo].[Users] ([user_id])
+GO
+ALTER TABLE [dbo].[Exam] CHECK CONSTRAINT [FK_Exam_Users]
 GO
 ALTER TABLE [dbo].[Topic_Exam]  WITH CHECK ADD  CONSTRAINT [FK_Topic_Exam_Users] FOREIGN KEY([create_id])
 REFERENCES [dbo].[Users] ([user_id])
@@ -838,10 +1024,60 @@ REFERENCES [dbo].[Type_Information] ([t_id])
 GO
 ALTER TABLE [dbo].[Document] CHECK CONSTRAINT [FK_Document_Type_Information]
 GO
-ALTER TABLE [dbo].[Type_Information]  WITH CHECK ADD  CONSTRAINT [FK_Type_Information_Results_Users] FOREIGN KEY([user_id])
+ALTER TABLE [dbo].[Type_Information]  WITH CHECK ADD  CONSTRAINT [FK_Type_Information_Users] FOREIGN KEY([user_id])
 REFERENCES [dbo].[Users] ([user_id])
 GO
-ALTER TABLE [dbo].[Type_Information] CHECK CONSTRAINT [FK_Type_Informations_Users]
+ALTER TABLE [dbo].[Type_Information] CHECK CONSTRAINT [FK_Type_Information_Users]
+GO
+ALTER TABLE [dbo].[Practice_Questions_Reading]  WITH CHECK ADD  CONSTRAINT [FK_Practice_Questions_Reading_Practice_Reading] FOREIGN KEY([read_id])
+REFERENCES [dbo].[Practice_Reading] ([read_id])
+GO
+ALTER TABLE [dbo].[Practice_Questions_Reading] CHECK CONSTRAINT [FK_Practice_Questions_Reading_Practice_Reading]
+GO
+ALTER TABLE [dbo].[Practice_Question_Speaking]  WITH CHECK ADD  CONSTRAINT [FK_Practice_Question_Speaking_Practice_Speaking] FOREIGN KEY([speak_id])
+REFERENCES [dbo].[Practice_Speaking] ([speak_id])
+GO
+ALTER TABLE [dbo].[Practice_Question_Speaking] CHECK CONSTRAINT [FK_Practice_Question_Speaking_Practice_Speaking]
+GO
+ALTER TABLE [dbo].[Practice_BrandPoint_Speaking]  WITH CHECK ADD  CONSTRAINT [FK_Practice_BrandPoint_Speaking_Practice_Question_Speaking] FOREIGN KEY([quest_id])
+REFERENCES [dbo].[Practice_Question_Speaking] ([quest_Speak])
+GO
+ALTER TABLE [dbo].[Practice_BrandPoint_Speaking] CHECK CONSTRAINT [FK_Practice_BrandPoint_Speaking_Practice_Question_Speaking]
+GO
+ALTER TABLE [dbo].[Practice_Questions_Listening]  WITH CHECK ADD  CONSTRAINT [FK_Practice_Questions_Listening_Practice_Listening] FOREIGN KEY([questListen_id])
+REFERENCES [dbo].[Practice_Listening] ([listen_id])
+GO
+ALTER TABLE [dbo].[Practice_Questions_Listening] CHECK CONSTRAINT [FK_Practice_Questions_Listening_Practice_Listening]
+GO
+ALTER TABLE [dbo].[Practice_BrandPoint_Writing]  WITH CHECK ADD  CONSTRAINT [FK_Practice_BrandPoint_Writing_Practice_Writing] FOREIGN KEY([quest_id])
+REFERENCES [dbo].[Practice_Writing] ([write_id])
+GO
+ALTER TABLE [dbo].[Practice_BrandPoint_Writing] CHECK CONSTRAINT [FK_Practice_BrandPoint_Writing_Practice_Writing]
+GO
+ALTER TABLE [dbo].[Practice_Reading]  WITH CHECK ADD  CONSTRAINT [FK_Practice_Reading_Practice_Exam] FOREIGN KEY([practice_id])
+REFERENCES [dbo].[Practice_Exam] ([practice_id])
+GO
+ALTER TABLE [dbo].[Practice_Reading] CHECK CONSTRAINT [FK_Practice_Reading_Practice_Exam]
+GO
+ALTER TABLE [dbo].[Practice_Speaking]  WITH CHECK ADD  CONSTRAINT [FK_Practice_Speaking_Practice_Exam] FOREIGN KEY([practice_id])
+REFERENCES [dbo].[Practice_Exam] ([practice_id])
+GO
+ALTER TABLE [dbo].[Practice_Speaking] CHECK CONSTRAINT [FK_Practice_Speaking_Practice_Exam]
+GO
+ALTER TABLE [dbo].[Practice_Listening]  WITH CHECK ADD  CONSTRAINT [FK_Practice_Listening_Practice_Exam] FOREIGN KEY([practice_id])
+REFERENCES [dbo].[Practice_Exam] ([practice_id])
+GO
+ALTER TABLE [dbo].[Practice_Listening] CHECK CONSTRAINT [FK_Practice_Listening_Practice_Exam]
+GO
+ALTER TABLE [dbo].[Practice_Writing]  WITH CHECK ADD  CONSTRAINT [FK_Practice_Writing_Practice_Exam] FOREIGN KEY([practice_id])
+REFERENCES [dbo].[Practice_Exam] ([practice_id])
+GO
+ALTER TABLE [dbo].[Practice_Writing] CHECK CONSTRAINT [FK_Practice_Writing_Practice_Exam]
+GO
+ALTER TABLE [dbo].[Practice_Exam]  WITH CHECK ADD  CONSTRAINT [FK_Practice_Exam_Users] FOREIGN KEY([create_id])
+REFERENCES [dbo].[Users] ([user_id])
+GO
+ALTER TABLE [dbo].[Practice_Exam] CHECK CONSTRAINT [FK_Practice_Exam_Users]
 GO
 USE [master]
 GO
