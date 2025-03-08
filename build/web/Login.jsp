@@ -50,10 +50,11 @@
                         <span>OR</span>
                     </div>
 
-                    <button class="google-btn">
+                    <a href ="https://accounts.google.com/o/oauth2/auth?scope=email profile openid&redirect_uri=http://localhost:8080/IEO/login&response_type=code&client_id=&access_type=offline&prompt=consent"
+                       class="google-btn">
                         <i class="fab fa-google"></i>
                         Login with Google
-                    </button>
+                    </a>
 
                     <div id="formFooter">
 

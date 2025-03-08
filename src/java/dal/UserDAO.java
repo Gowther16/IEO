@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Date;
 import java.sql.Statement;
+import java.sql.SQLException;
 
 /**
  *
@@ -51,7 +52,7 @@ public class UserDAO extends DBContext {
                 user.setPassword(rs.getString(4));
                 user.setCreatedAt(rs.getDate(5));
                 user.setLastLogin(rs.getDate(6));
-                
+
                 // Update last login time
                 updateLastLoginTime(user.getId());
                 return user;
@@ -64,68 +65,79 @@ public class UserDAO extends DBContext {
             e.printStackTrace();
         } finally {
             try {
-                if (rs != null) rs.close();
-                if (ps != null) ps.close();
-                if (con != null) con.close();
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
             } catch (Exception e) {
                 System.out.println("Error closing connections: " + e.getMessage());
             }
         }
         return null;
     }
-    
+
     public void register(String username, String password, String email) {
-    String sqlUser = "INSERT INTO Users (full_name, email, password) VALUES (?, ?, ?)";
-    String sqlRole = "INSERT INTO Role (user_id, role) VALUES (?, 1)"; 
-    try {
-        con = new DBContext().getConnection();
-        if (con == null) {
-            System.out.println("Failed to get database connection");
-            return;
-        }
+        String sqlUser = "INSERT INTO Users (full_name, email, password) VALUES (?, ?, ?)";
+        String sqlRole = "INSERT INTO Role (user_id, role) VALUES (?, 1)";
+        try {
+            con = new DBContext().getConnection();
+            if (con == null) {
+                System.out.println("Failed to get database connection");
+                return;
+            }
 
-        con.setAutoCommit(false); // Bắt đầu transaction
+            con.setAutoCommit(false); // Bắt đầu transaction
 
-        // Chèn vào bảng Users
-        ps = con.prepareStatement(sqlUser, Statement.RETURN_GENERATED_KEYS);
-        ps.setString(1, username);
-        ps.setString(2, email);
-        ps.setString(3, password);
+            // Chèn vào bảng Users
+            ps = con.prepareStatement(sqlUser, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, username);
+            ps.setString(2, email);
+            ps.setString(3, password);
 
-        int result = ps.executeUpdate();
-        if (result > 0) {
-            rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                int userId = rs.getInt(1); // Lấy user_id vừa tạo
+            int result = ps.executeUpdate();
+            if (result > 0) {
+                rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    int userId = rs.getInt(1); // Lấy user_id vừa tạo
 
-                // Chèn vào bảng Role với user_id lấy từ Users
-                ps = con.prepareStatement(sqlRole);
-                ps.setInt(1, userId);
-                ps.executeUpdate();
+                    // Chèn vào bảng Role với user_id lấy từ Users
+                    ps = con.prepareStatement(sqlRole);
+                    ps.setInt(1, userId);
+                    ps.executeUpdate();
 
-                con.commit(); // Xác nhận transaction
-                System.out.println("User registered successfully with user_id: " + userId);
+                    con.commit(); // Xác nhận transaction
+                    System.out.println("User registered successfully with user_id: " + userId);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error at register: " + e.getMessage());
+            e.printStackTrace();
+            try {
+                con.rollback(); // Rollback nếu có lỗi
+            } catch (Exception rollbackEx) {
+                System.out.println("Error during rollback: " + rollbackEx.getMessage());
+            }
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                System.out.println("Error closing connections: " + e.getMessage());
             }
         }
-    } catch (Exception e) {
-        System.out.println("Error at register: " + e.getMessage());
-        e.printStackTrace();
-        try {
-            con.rollback(); // Rollback nếu có lỗi
-        } catch (Exception rollbackEx) {
-            System.out.println("Error during rollback: " + rollbackEx.getMessage());
-        }
-    } finally {
-        try {
-            if (rs != null) rs.close();
-            if (ps != null) ps.close();
-            if (con != null) con.close();
-        } catch (Exception e) {
-            System.out.println("Error closing connections: " + e.getMessage());
-        }
     }
-}
-
 
     public User getUserByEmail(String email) {
         String sql = "SELECT * FROM Users WHERE email = ?";
@@ -139,14 +151,14 @@ public class UserDAO extends DBContext {
             ps = con.prepareStatement(sql);
             ps.setString(1, email);
             rs = ps.executeQuery();
-            
+
             if (rs.next()) {
                 User user = new User();
                 user.setId(rs.getInt(1));
                 user.setName(rs.getString(2));
                 user.setEmail(rs.getString(3));
                 user.setPassword(rs.getString(4));
-                
+
                 return user;
             }
         } catch (Exception e) {
@@ -155,8 +167,8 @@ public class UserDAO extends DBContext {
         }
         return null;
     }
-    
-     public User getUserById(int Id) {
+
+    public User getUserById(int Id) {
         String sql = "Select * from [Users] where user_id = ?";
         try {
             // Khởi tạo connection
@@ -165,21 +177,21 @@ public class UserDAO extends DBContext {
                 System.out.println("Failed to get database connection in getUserById");
                 return null;
             }
-            
+
             ps = con.prepareStatement(sql);
             ps.setInt(1, Id);
             rs = ps.executeQuery();
-            
+
             System.out.println("Executing getUserById for ID: " + Id);
-            
+
             if (rs.next()) {
                 User user = new User(
-                    rs.getInt(1),
-                    rs.getString(2), 
-                    rs.getString(3), 
-                    rs.getString(4),
-                    rs.getDate(5),
-                    rs.getDate(6)
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getDate(5),
+                        rs.getDate(6)
                 );
                 System.out.println("Found user with ID: " + Id);
                 return user;
@@ -191,9 +203,15 @@ public class UserDAO extends DBContext {
             e.printStackTrace();
         } finally {
             try {
-                if (rs != null) rs.close();
-                if (ps != null) ps.close();
-                if (con != null) con.close();
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
             } catch (Exception e) {
                 System.out.println("Error closing connections: " + e.getMessage());
             }
@@ -217,13 +235,12 @@ public class UserDAO extends DBContext {
         } catch (Exception e) {
             System.out.println("Error at updateLastLogin: " + e.getMessage());
             e.printStackTrace();
-        
+
         }
         return 0;
     }
 
     public void updatePassword(String email, String newPassword) {
-     
 
         String sql = "UPDATE [Users] SET [password] = ? WHERE [email] = ?";
         try {
@@ -232,12 +249,80 @@ public class UserDAO extends DBContext {
             ps.setString(1, newPassword);
             ps.setString(2, email);
             int result = ps.executeUpdate();
-           
+
         } catch (Exception e) {
             System.out.println("Error updating password: " + e.getMessage());
-       
-           
+
         }
     }
-    
+
+    public boolean createUserWithGG(User user, int roleId) throws Exception {
+        String sqlUser = "INSERT INTO Users (full_name, email, password) VALUES (?, ?, ?)";
+        String sqlRole = "INSERT INTO Role (user_id, role) VALUES (?, 1)";
+
+        try {
+            con = new DBContext().getConnection();
+            if (con == null) {
+                System.out.println("Failed to get database connection");
+                return false;
+            }
+
+            con.setAutoCommit(false); // Bắt đầu transaction
+
+            // 1️⃣ Thêm người dùng vào bảng Users
+            ps = con.prepareStatement(sqlUser, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, ""); // Google Login không cần mật khẩu
+
+            int result = ps.executeUpdate();
+            if (result > 0) {
+                rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    int userId = rs.getInt(1);
+                    user.setId(userId); // Lưu ID mới vào User object
+ 
+                    ps.close(); // Đóng ps trước khi mở lại
+                    ps = con.prepareStatement(sqlRole);
+                    ps.setInt(1, userId);
+                    ps.setInt(2, roleId); // 1 = Học sinh
+                    ps.executeUpdate();
+
+                    con.commit();
+                    System.out.println("Google user created successfully with user_id: " + userId);
+                    return true;
+                }
+            }
+
+            // Nếu có lỗi, rollback transaction
+            con.rollback();
+            System.out.println("Failed to insert Google user.");
+        } catch (SQLException e) {
+            try {
+                if (con != null) {
+                    con.rollback(); // Rollback nếu có lỗi
+                }
+            } catch (SQLException rollbackEx) {
+                rollbackEx.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            // Đảm bảo đóng tài nguyên
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
 }

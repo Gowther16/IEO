@@ -85,7 +85,7 @@
                         <li class="nav-item ">
                             <ul class="navbar-nav me-auto">
                                 <c:if test="${sessionScope.user == null}">
-                                    <li class="nav-item"><a class="nav-link" href="Login.jsp">Sign In</a></li> 
+                                    <li class="nav-item"><a class="nav-link" href="login">Sign In</a></li> 
                                     <li class="nav-item"><a class="nav-link" href="Register.jsp">Register</a></li>
                                     </c:if>
 
