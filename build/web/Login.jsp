@@ -50,7 +50,7 @@
                         <span>OR</span>
                     </div>
 
-                    <a href ="https://accounts.google.com/o/oauth2/auth?scope=email profile openid&redirect_uri=http://localhost:8080/IEO/login&response_type=code&client_id=696030290050-22djv2eogi6vclhhe9j4np4tmrsfhqdg.apps.googleusercontent.com&access_type=offline&prompt=consent"
+                    <a href ="https://accounts.google.com/o/oauth2/auth?scope=email profile openid&redirect_uri=http://localhost:8080/IEO/login&response_type=code&client_id=&access_type=offline&prompt=consent"
                        class="google-btn">
                         <i class="fab fa-google"></i>
                         Login with Google
