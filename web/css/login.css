@@ -261,8 +261,10 @@ h2.inactive {
     top: 82%;
     left: 50%;
     transform: translate(-50%, -50%);
-     
      height: 50px;
+}
+a{
+    text-decoration: none;
 }
 
 .google-btn:hover {
