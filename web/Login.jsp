@@ -32,7 +32,9 @@
                     <div class="first">
                         <i class="fas fa-user-circle fa-3x"></i>
                     </div>
-                    <form action="login" method="post" id="loginForm" autocomplete="off">
+                    <form action="login" method="post" id="loginForm" autocomplete="off"> 
+                        
+                        <p class="text-danger">${errorLogin}</p>                    
                         <input type="email" id="email" name="email" placeholder="Email"  
                                autocomplete="off" required>
                         <div class="password-container">
@@ -50,8 +52,8 @@
                         <span>OR</span>
                     </div>
 
-                    <a href ="https://accounts.google.com/o/oauth2/auth?scope=email profile openid&redirect_uri=http://localhost:8080/IEO/login&response_type=code&client_id=&access_type=offline&prompt=consent"
-                       class="google-btn">
+                    <a href ="https://accounts.google.com/o/oauth2/auth?scope=email profile openid&redirect_uri=http://localhost:8080/IEO/login&response_type=code&client_id=696030290050-22djv2eogi6vclhhe9j4np4tmrsfhqdg.apps.googleusercontent.com&access_type=offline&prompt=consent"
+                       <a  class="google-btn">
                         <i class="fab fa-google"></i>
                         Login with Google
                     </a>

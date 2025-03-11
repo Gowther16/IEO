@@ -68,13 +68,12 @@ public class LoginServlet extends HttpServlet {
         User user = uDao.getUserByEmail(ggAcc.getEmail());
 
         if (user == null) {
-            // Nếu tài khoản chưa tồn tại, tạo mới trong DB và gán role là "học sinh" (1)
             user = new User();
             user.setName(ggAcc.getName());
             user.setEmail(ggAcc.getEmail());
-            user.setPassword(""); // Để trống vì Google không cần password
+            user.setPassword(""); 
 
-            boolean isInserted = uDao.createUserWithGG(user, 1); // Role mặc định = 1 (học sinh)
+            boolean isInserted = uDao.createUserWithGG(user, 1);
             if (!isInserted) {
                 request.setAttribute("mess", "Fail to create Google account.");
                 request.getRequestDispatcher("Login.jsp").forward(request, response);
@@ -89,7 +88,7 @@ public class LoginServlet extends HttpServlet {
         // Lưu user vào session và chuyển hướng về home.jsp
         sess.setAttribute("user", user);
         response.sendRedirect("home");
-    }
+  }
 
 
     @Override
@@ -125,7 +124,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
             session.setAttribute("user", user);
             response.sendRedirect("home");
         } else {
-            request.setAttribute("error", "Invalid email or password");
+            request.setAttribute("errorLogin", "Invalid email or password!");
             request.getRequestDispatcher("Login.jsp").forward(request, response);
         }
     }
