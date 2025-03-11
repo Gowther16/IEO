@@ -52,6 +52,8 @@ public class UserDAO extends DBContext {
                 user.setPassword(rs.getString(4));
                 user.setCreatedAt(rs.getDate(5));
                 user.setLastLogin(rs.getDate(6));
+                user.setPhone(rs.getString(7));
+                user.setBirthdate(rs.getDate(8));
 
                 // Update last login time
                 updateLastLoginTime(user.getId());
@@ -158,6 +160,8 @@ public class UserDAO extends DBContext {
                 user.setName(rs.getString(2));
                 user.setEmail(rs.getString(3));
                 user.setPassword(rs.getString(4));
+                user.setPhone(rs.getString(5));
+                user.setBirthdate(rs.getDate(6));
 
                 return user;
             }
@@ -191,7 +195,9 @@ public class UserDAO extends DBContext {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getDate(5),
-                        rs.getDate(6)
+                        rs.getDate(6),
+                        rs.getString(7),
+                        rs.getDate(8)
                 );
                 System.out.println("Found user with ID: " + Id);
                 return user;
@@ -220,7 +226,7 @@ public class UserDAO extends DBContext {
     }
 
     private int updateLastLoginTime(int userId) {
-        String sql = "UPDATE Users SET lastLogin = ? WHERE Id = ?";
+        String sql = "UPDATE Users SET last_login = ? WHERE [user_id] = ?";
         try {
             System.out.println("Updating last login for user: " + userId);
             con = new DBContext().getConnection();
@@ -281,7 +287,7 @@ public class UserDAO extends DBContext {
                 if (rs.next()) {
                     int userId = rs.getInt(1);
                     user.setId(userId); // Lưu ID mới vào User object
- 
+
                     ps.close(); // Đóng ps trước khi mở lại
                     ps = con.prepareStatement(sqlRole);
                     ps.setInt(1, userId);
@@ -325,4 +331,51 @@ public class UserDAO extends DBContext {
         return false;
     }
 
+   public void updateProfile(User user) throws Exception {
+    String sql = "UPDATE [dbo].[Users] SET [full_name] = ?, [email] = ?, [password] = ?, [phone] = ?, [birthdate] = ? WHERE user_id = ?";
+    Connection con = null;
+    PreparedStatement ps = null;
+    try {
+        con = new DBContext().getConnection();
+        ps = con.prepareStatement(sql);
+        ps.setString(1, user.getName());
+        ps.setString(2, user.getEmail());
+        ps.setString(3, user.getPassword());
+        ps.setString(4, user.getPhone());
+        ps.setDate(5, new java.sql.Date(user.getBirthdate().getTime()));
+        ps.setInt(6, user.getId());
+        ps.executeUpdate();
+    } catch (SQLException e) {
+        System.out.println("Error updating profile: " + e.getMessage());
+        e.printStackTrace();
+        throw e; // Re-throw to be handled by the servlet
+    } finally {
+        try {
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        } catch (SQLException e) {
+            System.out.println("Error closing resources: " + e.getMessage());
+        }
+    }
+}
+    public static void main(String[] args) {
+         UserDAO userDAO = new UserDAO(); // Tạo đối tượng UserDAO
+
+        int testUserId = 19; 
+
+        User user = userDAO.getUserById(testUserId); 
+
+        if (user != null) {
+            System.out.println("User found:");
+            System.out.println("ID: " + user.getId());
+            System.out.println("Name: " + user.getName());
+            System.out.println("Email: " + user.getEmail());
+            System.out.println("Password: " + user.getPassword());
+            System.out.println("Phone: " + user.getPhone());
+            System.out.println("Birthdate: " + user.getBirthdate());
+        } else {
+            System.out.println("No user found with ID: " + testUserId);
+        }
+    }
+    
 }

@@ -31,7 +31,7 @@
 
                 <!-- Register Form -->
                 <form action="register" method="post" id="registerForm" autocomplete="off">
-                    <% if (request.getAttribute("errorLogin") != null) { %>
+                    <% if (request.getAttribute("error") != null) { %>
                     <p class="text-danger"><%= request.getAttribute("errorLogin") %></p>
                     <% } %>
                     <input type="text" id="username" name="username" placeholder="Username" autocomplete="off" required>

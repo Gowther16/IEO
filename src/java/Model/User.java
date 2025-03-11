@@ -16,15 +16,30 @@ public class User {
     private String password;
     private Date createdAt;
     private Date lastLogin;
+    private String phone;
+    private Date birthdate;
 
-    public User(int Id, String name, String email, String password, Date createdAt, Date lastLogin) {
+    public User(int Id, String name, String email, String password, Date createdAt, Date lastLogin, String phone, Date birthdate) {
         this.Id = Id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.createdAt = createdAt;
         this.lastLogin = lastLogin;
+        this.phone = phone;
+        this.birthdate = birthdate;
     }
+
+    public User(String name, String email, String password, String phone, Date birthdate) {
+        this.Id = Id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.birthdate = birthdate;
+    }
+
+ 
 
     public User() {
     }
@@ -78,10 +93,28 @@ public class User {
         this.lastLogin = lastLogin;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Date getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
+    }
+
     @Override
     public String toString() {
-        return "User{" + "Id=" + Id + ", name=" + name + ", email=" + email + ", password=" + password + ", createdAt=" + createdAt + ", lastLogin=" + lastLogin + '}';
+        return "User{" + "Id=" + Id + ", name=" + name + ", email=" + email + ", password=" + password + ", createdAt=" + createdAt + ", lastLogin=" + lastLogin + ", phone=" + phone + ", birthdate=" + birthdate + '}';
     }
+
+  
 
    
 }
