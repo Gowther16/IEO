@@ -4,6 +4,7 @@
  */
 package dal;
 
+import Bcryst.BCrypt;
 import dal.DBContext;
 import Model.User;
 import java.sql.Connection;
@@ -12,6 +13,7 @@ import java.sql.ResultSet;
 import java.util.Date;
 import java.sql.Statement;
 import java.sql.SQLException;
+import javax.lang.model.util.Types;
 
 /**
  *
@@ -23,65 +25,62 @@ public class UserDAO extends DBContext {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
-    public User login(String email, String password) {
-        // First check if user exists
-        User user = getUserByEmail(email);
-        if (user == null) {
-            System.out.println("User not found with email: " + email);
-            return null;
-        }
-
-        String sql = "select * from Users where email = ? and password = ?";
+   public User login(String email, String password) {
+    User user = getUserByEmail(email);
+    if (user == null) {
+        System.out.println("User not found with email: " + email);
+        return null;
+    }
+    // Laays mk db
+    String hashedPassword = user.getPassword();
+    
+    // So sánh mk nhập vào với mk đã mã hóa trong db
+    if (BCrypt.checkpw(password, hashedPassword)) {
         try {
-            System.out.println("Attempting to login user: " + email);
+            System.out.println("Login successful for user: " + email);
             con = new DBContext().getConnection();
             if (con == null) {
                 System.out.println("Failed to get database connection");
                 return null;
             }
+            
+            String sql = "SELECT * FROM Users WHERE email = ?";
             ps = con.prepareStatement(sql);
             ps.setString(1, email);
-            ps.setString(2, password);
             rs = ps.executeQuery();
+            
             if (rs.next()) {
-                System.out.println("Login successful for user: " + email);
-                user = new User();
                 user.setId(rs.getInt(1));
                 user.setName(rs.getString(2));
                 user.setEmail(rs.getString(3));
-                user.setPassword(rs.getString(4));
-                user.setCreatedAt(rs.getDate(5));
-                user.setLastLogin(rs.getDate(6));
-                user.setPhone(rs.getString(7));
-                user.setBirthdate(rs.getDate(8));
+                user.setBirthdate(rs.getDate(5));
+                user.setPhone(rs.getString(6));
+                user.setCreatedAt(rs.getDate(7));
+                user.setLastLogin(rs.getDate(8));
 
-                // Update last login time
+                // Cập nhật thời gian đăng nhập cuối cùng
                 updateLastLoginTime(user.getId());
+
                 return user;
-            } else {
-                System.out.println("Invalid password for user: " + email);
-                return null;
             }
         } catch (Exception e) {
             System.out.println("Error at login: " + e.getMessage());
             e.printStackTrace();
         } finally {
             try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (ps != null) {
-                    ps.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
             } catch (Exception e) {
                 System.out.println("Error closing connections: " + e.getMessage());
             }
         }
-        return null;
+    } else {
+        System.out.println("Invalid password for user: " + email);
     }
+    return null;
+}
+
 
     public void register(String username, String password, String email) {
         String sqlUser = "INSERT INTO Users (full_name, email, password) VALUES (?, ?, ?)";
@@ -99,7 +98,7 @@ public class UserDAO extends DBContext {
             ps = con.prepareStatement(sqlUser, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, username);
             ps.setString(2, email);
-            ps.setString(3, password);
+            ps.setString(3, BCrypt.hashpw(password, BCrypt.gensalt()));
 
             int result = ps.executeUpdate();
             if (result > 0) {
@@ -162,8 +161,12 @@ public class UserDAO extends DBContext {
                 user.setPassword(rs.getString(4));
                 user.setPhone(rs.getString(5));
                 user.setBirthdate(rs.getDate(6));
-
+  
+                System.out.println("Found user with email: " + email);
                 return user;
+            } else {
+                System.out.println("No user found with email: " + email);
+                
             }
         } catch (Exception e) {
             System.out.println("Error getting user by email: " + e.getMessage());
@@ -275,7 +278,7 @@ public class UserDAO extends DBContext {
 
             con.setAutoCommit(false); // Bắt đầu transaction
 
-            // 1️⃣ Thêm người dùng vào bảng Users
+            //Them 1 user vao db
             ps = con.prepareStatement(sqlUser, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, user.getName());
             ps.setString(2, user.getEmail());
@@ -331,24 +334,45 @@ public class UserDAO extends DBContext {
         return false;
     }
 
-   public void updateProfile(User user) throws Exception {
+  public void updateProfile(User user) throws Exception {
     String sql = "UPDATE [dbo].[Users] SET [full_name] = ?, [email] = ?, [password] = ?, [phone] = ?, [birthdate] = ? WHERE user_id = ?";
     Connection con = null;
     PreparedStatement ps = null;
     try {
         con = new DBContext().getConnection();
+        
+        // Kiểm tra nếu người dùng thay đổi mật khẩu thì mã hóa
+        String hashedPassword = user.getPassword();
+        if (hashedPassword != null && !hashedPassword.isEmpty()) {
+            hashedPassword = BCrypt.hashpw(hashedPassword, BCrypt.gensalt()); // Mã hóa mật khẩu
+        } else {
+            // Nếu không nhập mật khẩu mới, giữ nguyên mật khẩu cũ
+            String queryPass = "SELECT password FROM Users WHERE user_id = ?";
+            try (PreparedStatement psGet = con.prepareStatement(queryPass)) {
+                psGet.setInt(1, user.getId());
+                ResultSet rs = psGet.executeQuery();
+                if (rs.next()) {
+                    hashedPassword = rs.getString("password");
+                }
+            }
+        }
+
         ps = con.prepareStatement(sql);
         ps.setString(1, user.getName());
         ps.setString(2, user.getEmail());
-        ps.setString(3, user.getPassword());
+        ps.setString(3, hashedPassword);
         ps.setString(4, user.getPhone());
         ps.setDate(5, new java.sql.Date(user.getBirthdate().getTime()));
+    
+
         ps.setInt(6, user.getId());
         ps.executeUpdate();
+
+        System.out.println("Profile updated successfully for user ID: " + user.getId());
     } catch (SQLException e) {
         System.out.println("Error updating profile: " + e.getMessage());
         e.printStackTrace();
-        throw e; // Re-throw to be handled by the servlet
+        throw e; 
     } finally {
         try {
             if (ps != null) ps.close();
@@ -359,7 +383,7 @@ public class UserDAO extends DBContext {
     }
 }
     public static void main(String[] args) {
-         UserDAO userDAO = new UserDAO(); // Tạo đối tượng UserDAO
+         UserDAO userDAO = new UserDAO(); 
 
         int testUserId = 19; 
 

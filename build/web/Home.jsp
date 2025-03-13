@@ -27,6 +27,7 @@
 
     <body>
         <jsp:include page="Menu.jsp"></jsp:include>
+        <jsp:include page="Popup.jsp" />
         <!-- Hero Section -->
         <div class="slider">
             <div class="list">

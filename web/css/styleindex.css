@@ -121,6 +121,27 @@ body{
     margin-top: 0;
 }
 
+/*ielts exam dropdown*/
+
+.ielts-exam-library h2{
+    text-align: center;
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+.ielts-test-collection{
+    width: 70%;
+}
+.card{
+    flex-direction: row;
+    align-items: center;
+}
+.month{
+    flex-direction: column;
+    display: flex;
+}
+.month button{
+    margin: 10px;
+}
 
 /* Slider */
 .slider {
