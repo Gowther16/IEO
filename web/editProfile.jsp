@@ -27,11 +27,11 @@
             <!-- Edit Profile Section -->
             <div class="container my-5">
                 <div class="row justify-content-center">
-                    <div class="col-lg-6">
+                    <div class="col-lg-5">
                         <div class="card p-4 shadow-lg profile-card">
-                            <h3 class="text-center text-primary mb-5 fw-bold ">My Profile</h3>
                             <!-- Form Section -->
                             <form action="myProfile" method="post">
+                            <h3 class="text-center text-primary mb-5 fw-bold ">My Profile</h3>
                             <% if (request.getAttribute("mess") != null) { %>
                             <p class="alert alert-danger text-center"><%= request.getAttribute("mess") %></p>
                             <% } %>

@@ -17,6 +17,14 @@
         <servlet-name>EditProfile</servlet-name>
         <servlet-class>Controller.EditProfileServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BannerServlet</servlet-name>
+        <servlet-class>Controller.BannerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PopUpServlet</servlet-name>
+        <servlet-class>Controller.PopUpServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -60,6 +68,14 @@
     <servlet-mapping>
         <servlet-name>EditProfile</servlet-name>
         <url-pattern>/myProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BannerServlet</servlet-name>
+        <url-pattern>/banner</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PopUpServlet</servlet-name>
+        <url-pattern>/popup</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>60</session-timeout>
