@@ -29,12 +29,7 @@ public class PopUpServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String adImage = "";
-        String adLink = "http://localhost:8080/IEO/ListeningTest.jsp";
-
-        request.setAttribute("adImage", adImage);
-        request.setAttribute("adLink", adLink);
-
+     
         // Chuyển hướng đến JSP để hiển thị pop-up
         request.getRequestDispatcher("Popup.jsp").forward(request, response);
     }
