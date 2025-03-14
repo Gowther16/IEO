@@ -19,16 +19,32 @@ import java.time.format.DateTimeFormatter;
  * @author HP
  */
 public class TokenForgetDAO extends DBContext {
-
-    Connection con = null;
-    PreparedStatement ps = null;
-    ResultSet rs = null;
+    private Connection con = null;
+    private PreparedStatement ps = null;
+    private ResultSet rs = null;
 
     public TokenForgetDAO() {
         try {
-            con = getConnection();
+            con = super.getConnection();
+            if (con != null) {
+                System.out.println("Database connection established in TokenForgetDAO!");
+                System.out.println("Connection status: " + (con.isClosed() ? "Closed" : "Open"));
+            }
         } catch (Exception ex) {
-            System.out.println("Error establishing database connection: " + ex.getMessage());
+            System.out.println("Error in TokenForgetDAO constructor: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
+
+    private void ensureConnection() {
+        try {
+            if (con == null || con.isClosed()) {
+                con = super.getConnection();
+                System.out.println("Re-established database connection in TokenForgetDAO");
+            }
+        } catch (Exception ex) {
+            System.out.println("Error ensuring connection: " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
@@ -39,84 +55,84 @@ public class TokenForgetDAO extends DBContext {
     }
 
     public boolean insertTokenForget(TokenForgetPassword tokenForget) {
-        String sql = "INSERT INTO [dbo].[ForgetPassword]\n"
-                + "           ([token]\n"
-                + "           ,[expiryTime]\n"
-                + "           ,[isUsed]\n"
-                + "           ,[user_id])\n"
-                + "     VALUES(?, ?, ?, ?)";
+        ensureConnection();
+        String sql = "INSERT INTO [dbo].[ForgetPassword] ([token], [expiryTime], [isUsed], [user_id]) VALUES (?, ?, ?, ?)";
         try {
-            if (con == null) {
-                System.out.println("Connection is null, attempting to reconnect...");
-                con = getConnection();
-                if (con == null) {
-                    System.out.println("Failed to establish database connection");
-                    return false;
-                }
-            }
-            
-            PreparedStatement ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
             ps.setString(1, tokenForget.getToken());
-            
-            // Convert LocalDateTime to Timestamp
-            LocalDateTime expiryTime = tokenForget.getExpiryTime();
-            if (expiryTime != null) {
-                ps.setTimestamp(2, Timestamp.valueOf(expiryTime));
-            } else {
-                System.out.println("ExpiryTime is null!");
-                return false;
-            }
-            
+            ps.setTimestamp(2, Timestamp.valueOf(getFormatDate(tokenForget.getExpiryTime())));
             ps.setBoolean(3, tokenForget.isIsUsed());
             ps.setInt(4, tokenForget.getUserId());
-
-            int result = ps.executeUpdate();
-            System.out.println("Insert result: " + result);
-            return result > 0;
+            
+            System.out.println("Inserting token for user ID: " + tokenForget.getUserId());
+            return ps.executeUpdate() > 0;
         } catch (SQLException e) {
-            System.out.println("SQL Error inserting token: " + e.getMessage());
+            System.out.println("Error inserting token: " + e.getMessage());
             e.printStackTrace();
-        } catch (Exception e) {
-            System.out.println("General Error inserting token: " + e.getMessage());
-            e.printStackTrace();
+        } finally {
+            try {
+                if (ps != null) ps.close();
+            } catch (SQLException e) {
+                System.out.println("Error closing statement: " + e.getMessage());
+            }
         }
         return false;
     }
 
     public TokenForgetPassword getTokenPassword(String token) {
-        String sql = "Select * from [ForgetPassword] where token = ?";
+        ensureConnection();
+        String sql = "SELECT * FROM [ForgetPassword] WHERE token = ?";
         try {
-            PreparedStatement st = con.prepareStatement(sql);
-            st.setString(1, token);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                return new TokenForgetPassword(
-                        rs.getInt("id"),
-                        rs.getInt("userId"),
-                        rs.getString("token"),
-                        rs.getBoolean("isUsed"),
-                        rs.getTimestamp("expiryTime").toLocalDateTime()
+            ps = con.prepareStatement(sql);
+            ps.setString(1, token);
+            rs = ps.executeQuery();
+            
+            System.out.println("Searching for token: " + token);
+            if (rs.next()) {
+                TokenForgetPassword tokenForget = new TokenForgetPassword(
+                    rs.getInt("user_id"),
+                    rs.getString("token"),
+                    rs.getBoolean("isUsed"),
+                    rs.getTimestamp("expiryTime").toLocalDateTime()
                 );
+                System.out.println("Found token for user ID: " + tokenForget.getUserId());
+                return tokenForget;
             }
+            System.out.println("No token found: " + token);
         } catch (SQLException e) {
-            System.out.println(e);
+            System.out.println("Error retrieving token: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+            } catch (SQLException e) {
+                System.out.println("Error closing resources: " + e.getMessage());
+            }
         }
         return null;
     }
 
     public void updateStatus(TokenForgetPassword token) {
-        System.out.println("token = " + token);
-        String sql = "UPDATE [dbo].[ForgetPassword]\n"
-                + "   SET [isUsed] = ?\n"
-                + " WHERE token = ?";
+        ensureConnection();
+        String sql = "UPDATE [dbo].[ForgetPassword] SET [isUsed] = ? WHERE token = ?";
         try {
-            PreparedStatement st = con.prepareStatement(sql);
-            st.setBoolean(1, token.isIsUsed());
-            st.setString(2, token.getToken());
-            st.executeUpdate();
+            ps = con.prepareStatement(sql);
+            ps.setBoolean(1, token.isIsUsed());
+            ps.setString(2, token.getToken());
+            
+            System.out.println("Updating status for token: " + token.getToken());
+            int updated = ps.executeUpdate();
+            System.out.println("Updated " + updated + " records");
         } catch (SQLException e) {
-            System.out.println(e);
+            System.out.println("Error updating token status: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ps != null) ps.close();
+            } catch (SQLException e) {
+                System.out.println("Error closing statement: " + e.getMessage());
+            }
         }
     }
-
 }

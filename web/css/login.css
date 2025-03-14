@@ -44,6 +44,14 @@ html, body {
 }
 
 /*TAB*/
+
+.first h2{
+    color: #333;
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
 h2 {
     text-align: center;
     font-size: 16px;
@@ -132,7 +140,7 @@ h2.inactive {
 }
 
 .alert {
-    width: 85%;
+    width: 90%;
     margin: 10px auto;
     padding: 10px;
     border-radius: 5px;
@@ -253,8 +261,10 @@ h2.inactive {
     top: 82%;
     left: 50%;
     transform: translate(-50%, -50%);
-     
      height: 50px;
+}
+a{
+    text-decoration: none;
 }
 
 .google-btn:hover {
@@ -347,7 +357,7 @@ h2.inactive {
     background-color: #fff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: none;
-    animation: slideDown 0.5s ease-out forwards;
+   
 }
 
 .floating-alert.show {

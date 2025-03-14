@@ -10,7 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Forget Password</title>
-          <!-- Bootstrap CSS -->
+        <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
         <!-- Font Awesome -->
@@ -34,7 +34,13 @@
                 <!-- Alert Messages -->
                 <% if (request.getAttribute("mess") != null) { %>
                 <div class="alert alert-danger">
-                    <%= request.getAttribute("mess") %>
+                    <%= request.getAttribute("mess") %>  
+                </div>
+                <% } %>
+
+                <% if (request.getAttribute("success") != null) { %>
+                <div class="alert alert-success">
+                    <%= request.getAttribute("success") %>  
                 </div>
                 <% } %>
 

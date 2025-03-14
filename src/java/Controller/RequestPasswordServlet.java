@@ -14,7 +14,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import javax.mail.internet.HeaderTokenizer.Token;
+
 
 /**
  *
@@ -109,8 +109,7 @@ public class RequestPasswordServlet extends HttpServlet {
             return;
         }
      
-        request.setAttribute("mess","Send request success!" );
-        
+        request.setAttribute("success","Send request success! Please check your mail." );       
         request.getRequestDispatcher("requestPassword.jsp").forward(request, response);
     }
 

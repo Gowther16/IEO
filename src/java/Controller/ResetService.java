@@ -23,7 +23,9 @@ public class ResetService {
 
     private final int LIMIT_MINUS = 10;
     private final String from = "nguyenductuan922004@gmail.com";
-    private final String password = "jcwh buxk dmfa hjkv";
+   private final String password = "whmv zirv zitg zyzq";
+   
+
 
     public String generateToken() {
         return UUID.randomUUID().toString();
@@ -39,10 +41,11 @@ public class ResetService {
 
     public boolean sendEmail(String to, String link, String name) {
         Properties pros = new Properties();
-        pros.put("mail.stml.host", "smtp.gmail.com");
-        pros.put("mail.stmp.port", "587");
-        pros.put("mail.stmp.auth", "true");
-        pros.put("mail.stmp.starttle.enable", "true");
+        pros.put("mail.smtp.host", "smtp.gmail.com");
+        pros.put("mail.smtp.port", "587");
+        pros.put("mail.smtp.auth", "true");
+        pros.put("mail.smtp.starttls.enable", "true");
+        pros.put("mail.debug", "true");
 
         Authenticator auth = new Authenticator() {
             @Override
@@ -58,8 +61,9 @@ public class ResetService {
             msg.setFrom(from);
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));
             msg.setSubject("Reset Password", "UTF-8");
-            String content = "<h1>Hello" + name + "</h1>" + "<p>. Click the link to reset password<a href=" + link + ">Click here</p>";
-            msg.setContent(content, "text/html, charset=UTF-8");
+           String content = "<h1>Hello " + name + "</h1>" +
+                 "<p>Click the link to reset password: <a href=\"" + link + "\">Click here</a></p>";
+            msg.setContent(content, "text/html; charset=UTF-8");
             Transport.send(msg);
             System.out.println("Send successful!");
             return true;

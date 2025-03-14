@@ -23,10 +23,7 @@ body{
     align-items: center;
     justify-content: space-between;
 }
-.container{
-    display: flex;
-    justify-content: center;
-}
+
 
 /* Navbar */
 .navbar {
@@ -124,6 +121,30 @@ body{
     margin-top: 0;
 }
 
+/*ielts exam dropdown*/
+.ielts-exam-practice{
+    display: flex;
+    justify-content: center;
+}
+.ielts-exam-library h2{
+    text-align: center;
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+.ielts-test-collection{
+    width: 70%;
+}
+.card{
+    flex-direction: row;
+    align-items: center;
+}
+.month{
+    flex-direction: column;
+    display: flex;
+}
+.month button{
+    margin: 10px;
+}
 
 /* Slider */
 .slider {
@@ -185,25 +206,7 @@ body{
     background-color: rgba(40, 38, 38, 0.8);
     color: white;
 }
-.ielts-exam-library h2{
-    text-align: center;
-    margin-bottom: 50px;
-    margin-top: 50px;
-}
-.ielts-test-collection{
-    width: 70%;
-}
-.card{
-    flex-direction: row;
-    align-items: center;
-}
-.month{
-    flex-direction: column;
-    display: flex;
-}
-.month button{
-    margin: 10px;
-}
+
 /* Footer */
 .footer {
     background-color: #24262b;

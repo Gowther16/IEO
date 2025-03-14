@@ -30,24 +30,24 @@
                 </div>
 
                 <!-- Register Form -->
-                <form action="register" method="post" id="registerForm">
-                      <% if (request.getAttribute("errorLogin") != null) { %>
+                <form action="register" method="post" id="registerForm" autocomplete="off">
+                    <% if (request.getAttribute("error") != null) { %>
                     <p class="text-danger"><%= request.getAttribute("errorLogin") %></p>
                     <% } %>
-                    <input type="text" id="username" name="username" placeholder="Username" required>
-                    <input type="email" id="email" name="email" placeholder="Email" required>
+                    <input type="text" id="username" name="username" placeholder="Username" autocomplete="off" required>
+                    <input type="email" id="email" name="email" placeholder="Email" autocomplete="off" required>
 
                     <% if (request.getAttribute("errorEmail") != null) { %>
                     <p class="text-danger"><%= request.getAttribute("errorEmail") %></p>
                     <% } %>
 
                     <div class="password-container">
-                        <input type="password" id="password" class="password-input" name="password" placeholder="Password" required>
+                        <input type="password" id="password" class="password-input" name="password" placeholder="Password" autocomplete="off" required>
                         <i class="far fa-eye" id="togglePassword"></i>
                     </div>
 
                     <div class="password-container">
-                        <input type="password" id="confirmPassword" class="password-input" name="confirmPassword" placeholder="Confirm Password" required>
+                        <input type="password" id="confirmPassword" class="password-input" name="confirmPassword" placeholder="Confirm Password" autocomplete="off" required>
                         <i class="far fa-eye" id="toggleConfirmPassword"></i>
                     </div>
 
@@ -70,36 +70,8 @@
         <!-- jQuery and Bootstrap Bundle (includes Popper) -->
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-        <!-- Custom JS -->
-        <script>
-            // Toggle password visibility
-            document.getElementById('togglePassword').addEventListener('click', function () {
-                const password = document.getElementById('password');
-                if (password.type === 'password') {
-                    password.type = 'text';
-                    this.classList.remove('fa-eye');
-                    this.classList.add('fa-eye-slash');
-                } else {
-                    password.type = 'password';
-                    this.classList.remove('fa-eye-slash');
-                    this.classList.add('fa-eye');
-                }
-            });
-
-            document.getElementById('toggleConfirmPassword').addEventListener('click', function () {
-                const confirmPassword = document.getElementById('confirmPassword');
-                if (confirmPassword.type === 'password') {
-                    confirmPassword.type = 'text';
-                    this.classList.remove('fa-eye');
-                    this.classList.add('fa-eye-slash');
-                } else {
-                    confirmPassword.type = 'password';
-                    this.classList.remove('fa-eye-slash');
-                    this.classList.add('fa-eye');
-                }
-            });
-
-        </script>
+        <script src="js/register.js"></script>
+       
+        
     </body>
 </html>

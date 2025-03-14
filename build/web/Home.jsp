@@ -27,6 +27,7 @@
 
     <body>
         <jsp:include page="Menu.jsp"></jsp:include>
+        <jsp:include page="Popup.jsp" />
         <!-- Hero Section -->
         <div class="slider">
             <div class="list">
@@ -50,6 +51,7 @@
 
         <!--Footer-->
         <jsp:include page="Footer.jsp"></jsp:include>
+        <<script src="js/main.js"></script>>
     </body>
 
 </html>

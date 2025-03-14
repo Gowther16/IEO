@@ -32,15 +32,16 @@
                     <div class="first">
                         <i class="fas fa-user-circle fa-3x"></i>
                     </div>
-                    <form action="login" method="post" id="loginForm" autocomplete="off">
-                        <input type="email" id="email" name="email" placeholder="Email" required 
-                               value="">
+                    <form action="login" method="post" id="loginForm" autocomplete="off"> 
+                        
+                        <p class="text-danger">${errorLogin}</p>                    
+                        <input type="email" id="email" name="email" placeholder="Email"  
+                               autocomplete="off" required>
                         <div class="password-container">
-                            <input type="password" id="loginPassword" name="password" placeholder="Password" required
-                                   value="">
+                            <input type="password" id="loginPassword" name="password" placeholder="Password" 
+                                   autocomplete="off" required>
                             <i class="far fa-eye" id="toggleLoginPassword"></i>
                         </div>
-                        <p>${error}</p>
                         <button type="submit" class="login-btn">LOG IN</button>
 
                         <div id="formFooter">
@@ -51,10 +52,11 @@
                         <span>OR</span>
                     </div>
 
-                    <button class="google-btn">
+                    <a href ="https://accounts.google.com/o/oauth2/auth?scope=email profile openid&redirect_uri=http://localhost:8080/IEO/login&response_type=code&client_id=696030290050-22djv2eogi6vclhhe9j4np4tmrsfhqdg.apps.googleusercontent.com&access_type=offline&prompt=consent"
+                       <a  class="google-btn">
                         <i class="fab fa-google"></i>
                         Login with Google
-                    </button>
+                    </a>
 
                     <div id="formFooter">
 
@@ -75,18 +77,18 @@
                 // Reset form fields
                 document.getElementById('loginEmail').value = '';
                 document.getElementById('loginPassword').value = '';
-                
+
                 // Tự động focus vào ô email
                 document.getElementById('loginEmail').focus();
-                
+
                 // Ẩn error message sau 3 giây
-                setTimeout(function() {
+                setTimeout(function () {
                     document.querySelector('.alert-danger').style.display = 'none';
                 }, 3000);
             }
 
             // Toggle password visibility
-            document.getElementById('toggleLoginPassword').addEventListener('click', function() {
+            document.getElementById('toggleLoginPassword').addEventListener('click', function () {
                 const passwordInput = document.getElementById('loginPassword');
                 if (passwordInput.type === 'password') {
                     passwordInput.type = 'text';
@@ -98,6 +100,19 @@
                     this.classList.add('fa-eye');
                 }
             });
+            //reset information
+            document.getElementById("loginForm").addEventListener("submit", function () {
+                setTimeout(() => {
+                    this.reset(); // X�a d? li?u trong form
+                }, 100);
+            });
+
+            document.getElementById("registerForm").addEventListener("submit", function () {
+                setTimeout(() => {
+                    this.reset();
+                }, 100);
+            });
+
         </script>
     </body>
 </html>

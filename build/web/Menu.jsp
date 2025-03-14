@@ -1,3 +1,4 @@
+
 <%-- 
     Document   : Menu
     Created on : Mar 6, 2025, 11:07:53 PM
@@ -62,11 +63,11 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="examDropdown" role="button" data-bs-toggle="dropdown">IELTS Exam Library</a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="ListeningTest.jsp">Ielts Listening test</a></li>
-                                    <li><a class="dropdown-item" href="ReadingTest.jsp">Ielts Reading test</a></li>
-                                    <li><a class="dropdown-item" href="WritingTest.jsp">Ielts Writing test</a></li>
-                                    <li><a class="dropdown-item" href="SpeakingTest.jsp">Ielts Speaking test</a></li>
-                                    <li><a class="dropdown-item" href="TestCollection.jsp">Ielts Test collection</a></li>
+                                    <li><a class="dropdown-item" href="ListeningPractice.jsp">Ielts Listening Practice</a></li>
+                                    <li><a class="dropdown-item" href="ReadingPractice.jsp">Ielts Reading Practice</a></li>
+                                    <li><a class="dropdown-item" href="WritingPractice.jsp">Ielts Writing Practice</a></li>
+                                    <li><a class="dropdown-item" href="SpeakingPractice.jsp">Ielts Speaking Practice</a></li>
+                                    <li><a class="dropdown-item" href="PracticeCollection.jsp">Ielts Practice collection</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
@@ -89,8 +90,8 @@
                         <li class="nav-item ">
                             <ul class="navbar-nav me-auto">
                                 <c:if test="${sessionScope.user == null}">
-                                    <li class="nav-item"><a class="nav-link" href="Register.jsp">Register</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="Login.jsp">Sign In</a></li> 
+                                    <li class="nav-item"><a class="nav-link" href="login">Sign In</a></li> 
+                                    <li class="nav-item"><a class="nav-link" href="register">Register</a></li>
                                     </c:if>
 
                                 <c:if test="${sessionScope.user != null}"> 
@@ -99,7 +100,7 @@
                                             ${sessionScope.user.name}
                                         </a>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">My Profile</a></li>
+                                            <li><a class="dropdown-item" href="myProfile">My Profile</a></li>
                                             <li><a class="dropdown-item" href="logout">Log Out</a></li>
                                         </ul>
                                     </li>
