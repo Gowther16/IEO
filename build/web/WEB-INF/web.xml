@@ -60,4 +60,9 @@
     <welcome-file-list>
         <welcome-file>Home.jsp</welcome-file>
     </welcome-file-list>
+    <servlet>
+    <servlet-name>WebSocketChat</servlet-name>
+    <servlet-class>org.apache.tomcat.websocket.server.WsSci</servlet-class>
+</servlet>
+
 </web-app>

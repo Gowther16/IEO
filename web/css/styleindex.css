@@ -244,5 +244,36 @@ body{
     color: #24262b;
 }
 
+/*kien faq*/
+
+.faq-section h2 {
+    font-weight: 700;
+    color: #0d6efd;
+}
+
+.accordion-button {
+    background-color: #f8f9fa;
+    font-weight: 500;
+    color: #333;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #0d6efd;
+    color: #fff;
+}
+
+.accordion-body a {
+    color: #0d6efd;
+    text-decoration: underline;
+}
+
+.accordion-item {
+    margin-bottom: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+
 
 
