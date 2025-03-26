@@ -1,0 +1,222 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa; /* Màu nền nhẹ nhàng hơn */
+    color: #333;
+    line-height: 1.6;
+}
+
+.nav {
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(135deg, #ffffff, #f1f3f5); /* Gradient nhẹ */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Đổ bóng mềm mại */
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.nav button {
+    background-color: transparent;
+    color: #495057;
+    border: none;
+    padding: 12px 20px;
+    margin: 0 15px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav button:hover {
+    color: #007bff;
+}
+
+.nav button.active {
+    color: #007bff;
+    border-bottom: 3px solid #007bff; /* Đường viền đậm hơn khi active */
+    font-weight: 600;
+}
+
+.nav button::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    background: #007bff;
+    bottom: -3px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+}
+
+.nav button:hover::after {
+    width: 80%; /* Hiệu ứng kéo dài khi hover */
+}
+
+.tab {
+    display: none;
+    padding: 25px;
+    margin: 30px auto;
+    max-width: 1000px; /* Tăng chiều rộng cho thoáng hơn */
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); /* Đổ bóng tinh tế */
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+.tab.active {
+    display: block;
+}
+
+h1, h2, h3, h4 {
+    color: #212529;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    margin: 30px 0;
+}
+
+h2 {
+    font-size: 26px;
+    font-weight: 600;
+}
+
+h3 {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+h4 {
+    font-size: 18px;
+    font-weight: 500;
+    color: #495057;
+}
+
+p {
+    color: #6c757d;
+    line-height: 1.8;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0 15px 0;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 15px;
+    background-color: #f8f9fa;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus, textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    outline: none;
+}
+
+textarea {
+    resize: vertical; /* Chỉ cho phép thay đổi chiều cao */
+    min-height: 100px;
+}
+
+button.addAnswerOption, 
+#addQuestionReading, 
+#addQuestionListening, 
+#addQuestionListeningWrite, 
+#addQuestionSpeaking, 
+button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 15px;
+    display: inline-block;
+}
+
+button.addAnswerOption:hover, 
+#addQuestionReading:hover, 
+#addQuestionListening:hover, 
+#addQuestionListeningWrite:hover, 
+#addQuestionSpeaking:hover, 
+button[type="submit"]:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); /* Hiệu ứng nâng nhẹ */
+}
+
+button[type="submit"] {
+    background-color: #28a745; /* Màu xanh lá cho nút Save */
+    display: block;
+    margin: 30px auto;
+    padding: 14px 40px;
+    font-size: 16px;
+}
+
+button[type="submit"]:hover {
+    background-color: #218838;
+}
+
+.question-container {
+    padding: 20px;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background-color: #fdfdfd; /* Nền nhẹ để phân biệt */
+    transition: box-shadow 0.3s ease;
+}
+
+.question-container:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Hiệu ứng khi hover */
+}
+
+.answerOptionsContainer {
+    margin-top: 15px;
+    padding-left: 20px;
+}
+
+.answer-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    gap: 10px; /* Khoảng cách giữa các phần tử */
+}
+
+.answer-option label {
+    min-width: 80px;
+    color: #495057;
+    font-weight: 400;
+}
+
+.answer-option input[type="text"] {
+    flex: 1;
+    margin: 0;
+}
+
+.answer-option input[type="radio"] {
+    margin: 0 5px 0 15px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
