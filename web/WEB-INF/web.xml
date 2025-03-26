@@ -41,6 +41,18 @@
         <servlet-name>writingTest</servlet-name>
         <servlet-class>Controller.WritingTestServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>insertTest</servlet-name>
+        <servlet-class>Controller.InsertTestServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>finishTest</servlet-name>
+        <servlet-class>Controller.FinishTestServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>takeTest</servlet-name>
+        <servlet-class>Controller.TakeTestServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -109,10 +121,22 @@
         <servlet-name>writingTest</servlet-name>
         <url-pattern>/writingTest</url-pattern>
     </servlet-mapping>
-    <session-config>
+    <servlet-mapping>
+        <servlet-name>insertTest</servlet-name>
+        <url-pattern>/insertTest</url-pattern>
+    </servlet-mapping>
+    <!--    <session-config>
         <session-timeout>60</session-timeout>
-    </session-config>
+    </session-config>-->
     <!-- Welcome File -->
+    <servlet-mapping>
+        <servlet-name>finishTest</servlet-name>
+        <url-pattern>/finishTest</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>takeTest</servlet-name>
+        <url-pattern>/takeTest</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>Home.jsp</welcome-file>
     </welcome-file-list>

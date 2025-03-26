@@ -12,8 +12,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import Model.Writing;
+import Mongodb.UploadMP3File;
 import dal.WritingDAO;
+import java.io.File;
 import java.util.*;
+
 /**
  *
  * @author bangc
@@ -37,7 +40,7 @@ public class WritingTestServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet TakeTestServlet</title>");            
+            out.println("<title>Servlet TakeTestServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet TakeTestServlet at " + request.getContextPath() + "</h1>");
@@ -72,14 +75,31 @@ public class WritingTestServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String base64String = request.getParameter("recordedAudio");
+        if (base64String != null) {
+            int commaIndex = base64String.indexOf(',');
+            if (commaIndex != -1) {
+                String header = base64String.substring(0, commaIndex);
+                String data = base64String.substring(commaIndex + 1);
+                String format = header.substring(header.indexOf(":") + 1, header.indexOf(";"));
+                String extension = format.contains("mp3") ? "mp3" : "webm";
+                byte[] decodedBytes = Base64.getDecoder().decode(data);
+                String filename = "recording." + extension;
+                File file = new File(filename);
+                UploadMP3File upload = new UploadMP3File();
+                upload.uploadSpeaking(file);
+            }
+        }
+
         List<Writing> lstwrite = new ArrayList<>();
         WritingDAO writedao = new WritingDAO();
-        lstwrite= writedao.GetAllWriting();
+        lstwrite = writedao.GetAllWriting();
         Writing write_print = new Writing();
         write_print = lstwrite.get(0);
         request.setAttribute("writing", write_print);
         request.getRequestDispatcher("WritingTest.jsp").forward(request, response);
     }
+
     /**
      * Returns a short description of the servlet.
      *

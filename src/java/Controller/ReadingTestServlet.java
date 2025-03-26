@@ -74,6 +74,9 @@ public class ReadingTestServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String test = request.getParameter("test_id");
+//        Integer test_id = Integer.parseInt(test);
+        int test_id=1;
         List<Reading> lstread = new ArrayList<>();
         List<Questions_Reading> lstquest_read= new ArrayList<>();
         ReadingDAO readdao = new ReadingDAO();
@@ -93,7 +96,10 @@ public class ReadingTestServlet extends HttpServlet {
         for (int i = 0; i < lstquest_readPrint.size(); i++) {
             ans = lstquest_readPrint.get(i).getAnswer_options().split("\\|-another answer-\\|");
         }
+        lstquest_readPrint.get(0).getQuestRead_id();
+        read.setDuration(1);
         answer.addAll(Arrays.asList(ans));
+        request.setAttribute("test_id", test_id);
         request.setAttribute("reading",read );
         request.setAttribute("readContent", readContent);
         request.setAttribute("quest_read", lstquest_readPrint);

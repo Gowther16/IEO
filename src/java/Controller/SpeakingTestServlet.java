@@ -13,8 +13,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import Model.Reading;
 import Model.Questions_Reading;
+import Model.Questions_Speaking;
+import Model.Speaking;
 import dal.ReadingDAO;
 import dal.Questions_ReadingDAO;
+import dal.Questions_SpeakingDAO;
+import dal.SpeakingDAO;
 import java.util.*;
 /**
  *
@@ -74,6 +78,21 @@ public class SpeakingTestServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        List<Speaking> lstspeak = new ArrayList<>();
+        List<Questions_Speaking> lstqs = new ArrayList<>();
+        SpeakingDAO speakdao = new SpeakingDAO();
+        Questions_SpeakingDAO qsdao = new Questions_SpeakingDAO();
+        lstspeak = speakdao.GetAllSpeaking();
+        lstqs = qsdao.GetAllQuestions_Speaking();
+        Speaking speak = lstspeak.get(0);
+        List<Questions_Speaking> lstqspeak = new ArrayList<>();
+        for (int i = 0; i < lstqs.size(); i++) {
+            if(lstqs.get(i).getSpeak_id()==speak.getSpeak_id()){
+                lstqspeak.add(lstqs.get(i));
+            }
+        }
+        request.setAttribute("speaking", speak);
+        request.setAttribute("lstqspeak", lstqspeak);
         request.getRequestDispatcher("SpeakingTest.jsp").forward(request, response);
     }
     /**

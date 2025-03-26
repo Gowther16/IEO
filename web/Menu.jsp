@@ -86,6 +86,9 @@
                                     <li><a class="dropdown-item" href="#">Sample Question</a></li>
                                 </ul>
                             </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="TakeTest.jsp" id="prepDropdown" role="button" data-bs-toggle="dropdown">IELTS TEST</a>
+                            </li>
                         </ul>
                         <li class="nav-item ">
                             <ul class="navbar-nav me-auto">

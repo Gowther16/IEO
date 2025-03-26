@@ -17,12 +17,30 @@
             </p>
         </div>
         <div id="right-panel">
-            <h2>Questions</h2>
-            <p class="instructions">Choose the correct answer from the list of question below:</p>
+            <h2>Your Answer</h2>
+            <p>Time: <span id="timer"></span></p>
             <form class="headings" method="finishTest" method="POST">
+                <textarea id="writing" name="writing" rows="50" cols="70" placeholder="Input your writing here..."></textarea><br>
                 <button type="submit" class="take_test_btn">Submit </button>
             </form>
         </div>
     </div>
+    <script>
+            const durationInMinutes = parseInt("${writing.getDuration()}");
+            let timeLeft = durationInMinutes * 60;
+            function updateTimer() {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById("timer").innerText = minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0');
+                timeLeft--;
+                if (timeLeft < 0) {
+                    clearInterval(timerInterval);
+                    alert("Time's up!");
+                    document.querySelector("form").submit();
+                }
+            }
+            const timerInterval = setInterval(updateTimer, 1000);
+            updateTimer();
+    </script>
 </body>
 </html>

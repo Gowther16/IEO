@@ -29,8 +29,8 @@
                     <c:forEach items="${quest_read}" var="r">
                         <h4>${r.getQuestion_text()}</h4>
                         <c:forTokens var="option" items="${r.getAnswer_options()}" delims="|">
-                            <input type="radio" name="answer_${r.getQuestion_text()}" value="${option}" id="option_${r.getQuestion_text()}_${option}" />
-                            <label for="option_${r.getQuestion_text()}_${option}">${option}</label><br/>
+                            <input type="radio" name="answer_${r.getQuestRead_id()}" value="${option}" id="option_${r.getQuestRead_id()}_${option}" />
+                            <label for="option_${r.getQuestRead_id()}_${option}">${option}</label><br/>
                         </c:forTokens>
                         <br>
                     </c:forEach>
@@ -39,21 +39,22 @@
             </div>
         </div>
         <script>
-        const durationInMinutes = 1;
-        let timeLeft = durationInMinutes * 60;
-        function updateTimer() {
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
-            document.getElementById("timer").innerText = ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            timeLeft--;
-            if (timeLeft < 0) {
-                clearInterval(timerInterval);
-                alert("Time's up!");
-                document.querySelector("form").submit();
+//            const durationInMinutes = parseInt("${reading.getDuration()}"); // Fetching duration properly
+            const durationInMinutes = 25;
+            let timeLeft = durationInMinutes * 60;
+            function updateTimer() {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById("timer").innerText = minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0');
+                timeLeft--;
+                if (timeLeft < 0) {
+                    clearInterval(timerInterval);
+                    alert("Time's up!");
+                    document.querySelector("form").submit(); // Automatically submit form when time is up
+                }
             }
-        }
-        const timerInterval = setInterval(updateTimer, 1000);
-        updateTimer();
+            const timerInterval = setInterval(updateTimer, 1000); // Update every second
+            updateTimer();
         </script>
     </body>
 </html>

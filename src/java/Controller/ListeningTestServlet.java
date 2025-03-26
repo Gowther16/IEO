@@ -15,6 +15,7 @@ import Model.Listening;
 import Model.Questions_Listening_ChooseAnswer;
 import Model.Questions_Listening_Write;
 import Mongodb.DownloadMP3File;
+import dal.Answer_ReadingDAO;
 import dal.ListeningDAO;
 import dal.Questions_Listening_ChooseAnswerDAO;
 import dal.Question_Listening_WriteDAO;
@@ -79,6 +80,34 @@ public class ListeningTestServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+//        String test = request.getParameter("test_id");
+//        Integer test_id = Integer.parseInt(test);  
+//        Enumeration<String> parameterNames = request.getParameterNames();
+//        while (parameterNames.hasMoreElements()) {
+//            String paramName = parameterNames.nextElement();
+//            if (paramName.startsWith("answer_")) {
+//                try {
+//                    String questRead_id_str = paramName.substring("answer_".length());
+//                    int questRead_id = Integer.parseInt(questRead_id_str);
+//                    String content_Answer = request.getParameter(paramName);
+//                    if (content_Answer != null && !content_Answer.isEmpty()) {
+//                        Answer_ReadingDAO dao = new Answer_ReadingDAO();
+//                        int answerId = dao.insertAnswer_ReadingDAO(questRead_id, test_id, content_Answer);
+//                        if (answerId <= 0) {
+//                            // Xử lý lỗi chèn
+//                        }
+//                    } else {
+//                        Answer_ReadingDAO dao = new Answer_ReadingDAO();
+//                        int answerId = dao.insertAnswer_ReadingDAO(questRead_id, test_id, content_Answer);
+//                    }
+//                } catch (NumberFormatException e) {
+//                    response.sendError(HttpServletResponse.SC_NOT_FOUND,e.getMessage());
+//                }
+//            }
+//        }
+        
+        
+        
         List<Listening> lstlisten = new ArrayList<>();
         List<Questions_Listening_ChooseAnswer> lstqlchoose = new ArrayList<>();
         List<Questions_Listening_Write> lstqlw = new ArrayList<>();
@@ -88,22 +117,24 @@ public class ListeningTestServlet extends HttpServlet {
         lstlisten = listendao.GetAllListening();
         lstqlchoose = qlchoosedao.GetAllQuestions_Speaking();
         lstqlw = qlwdao.GetAllQuestions_Speaking();
-//        Listening listen = lstlisten.get(0);
+        Listening listen = lstlisten.get(0);
         List<Questions_Listening_ChooseAnswer> qlchoose = new ArrayList<>();
         List<Questions_Listening_Write> qlw = new ArrayList<>();
-//        for (int i = 0; i < lstqlchoose.size(); i++) {
-//            if(lstqlchoose.get(i).getListen_id()==listen.getListen_id()){
-//                qlchoose.add(lstqlchoose.get(i));
-//            }
-//        }
-//        for (int i = 0; i < lstqlw.size(); i++) {
-//            if(lstqlw.get(i).getListen_id()==listen.getListen_id()){
-//                qlw.add(lstqlw.get(i));
-//            }
-//        }
-        DownloadMP3File d = new DownloadMP3File();
-        File audio = d.downloadListening("67d90c70a300f23078107571");
-        request.setAttribute("audio", audio);
+        for (int i = 0; i < lstqlchoose.size(); i++) {
+            if(lstqlchoose.get(i).getListen_id()==listen.getListen_id()){
+                qlchoose.add(lstqlchoose.get(i));
+            }
+        }
+        for (int i = 0; i < lstqlw.size(); i++) {
+            if(lstqlw.get(i).getListen_id()==listen.getListen_id()){
+                qlw.add(lstqlw.get(i));
+            }
+        }
+        listen.getVideo_listen();
+//        request.setAttribute("test_id", test_id);
+        request.setAttribute("listening", listen);
+        request.setAttribute("qlchoose", qlchoose);
+        request.setAttribute("qlw", qlw);
         request.getRequestDispatcher("ListeningTest.jsp").forward(request, response);
     }
     /**

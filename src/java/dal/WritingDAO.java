@@ -7,6 +7,7 @@ import Model.Writing;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.*;
 
 /**
@@ -41,5 +42,26 @@ public class WritingDAO {
             }
         }
         return list;
+    }
+    public void InsertWriting(int topic_id,int duration,String Title,String content) {
+        String sql = "INSERT INTO [Writing]  VALUES (?,?,?,?)";
+        try{
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, topic_id);
+            ps.setInt(2, duration);
+            ps.setString(3, Title);
+            ps.setString(4, content);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }finally{
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (Exception e) {
+                System.out.println("Error closing connections: " + e.getMessage());
+            }
+        }
     }
 }

@@ -8,6 +8,7 @@ import Model.Listening;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +43,35 @@ public class ListeningDAO {
             }
         }
         return list;
+    }
+    public int InsertListening(int topic_id,int duration,String audio) {
+        int listen = 0;
+        String sql = "INSERT INTO [Listening]  VALUES (?,?,?)";
+        try{
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, topic_id);
+            ps.setInt(2, duration);
+            ps.setString(3, audio);
+            int result = ps.executeUpdate();
+            if (result > 0) {
+                rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    listen = rs.getInt(1);
+                }
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }finally{
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (Exception e) {
+                System.out.println("Error closing connections: " + e.getMessage());
+            }
+        }
+        return listen;
     }
 }
 
