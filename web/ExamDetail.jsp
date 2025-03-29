@@ -1,3 +1,5 @@
+anm<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,23 +25,18 @@
 
         <!-- Custom CSS -->
         <link rel="stylesheet" href="css/styleindex.css">
-        
-        <link rel="stylesheet" href="css/taketest.css">
     </head>
 
     <body>
         <jsp:include page="Menu.jsp"></jsp:include>
         <jsp:include page="Popup.jsp" />
-        <div id="test">
-            <form action="readingTest" method="POST">
-                <h1 id="t_title">TEST</h1>
-                <p class="t_content">1. Make sure you read the exam rules.</p>
-                <p class="t_content">2. All exams are timed, and when the time is up, your exam will be automatically submitted.</p>
-                <p class="t_content">Finally, we wish you a smooth exam, and that you will get the results you want. Thank you for your trust in us.</p>
-                <input type="hidden" name="test_id" value="${test_id}" />
-                <input type="hidden" name="topic" value="${topic}" />
-                <button class="take_test_btn">Take Test</button>
-            </form>
+        <div style="margin-left: auto;margin-right: auto;text-align: center;">
+            <c:forEach var="r" items="${exam}">
+                <form action="scoreTest" method="GET">
+                    <input name="exam_id" value="${r.getExam_id()}">${r.getTest_name()} <button type="Submit">Scoring test</button>
+                </form>
+                <br>
+            </c:forEach>
         </div>
 
         <!--Footer-->
@@ -48,3 +45,4 @@
     </body>
 
 </html>
+

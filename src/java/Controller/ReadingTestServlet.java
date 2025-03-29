@@ -74,9 +74,10 @@ public class ReadingTestServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String topic = request.getParameter("topic");
+        int topic_id = Integer.parseInt(topic);
         String test = request.getParameter("test_id");
-//        Integer test_id = Integer.parseInt(test);
-        int test_id=1;
+        int test_id = Integer.parseInt(test);
         List<Reading> lstread = new ArrayList<>();
         List<Questions_Reading> lstquest_read= new ArrayList<>();
         ReadingDAO readdao = new ReadingDAO();
@@ -84,12 +85,18 @@ public class ReadingTestServlet extends HttpServlet {
         lstread = readdao.GetAllReading();
         lstquest_read = quest_readdao.GetAllQuestion_Reading();
         List<Questions_Reading> lstquest_readPrint = new ArrayList<>();
+        Reading read = new Reading();
+        for (int i = 0; i < lstread.size(); i++) {
+            if(lstread.get(i).getTopic_id()==topic_id){
+                read =lstread.get(i);
+            }
+        }
         for (int i = 0; i < lstquest_read.size(); i++) {
-            if(lstquest_read.get(i).getRead_id()==1){
+            if(lstquest_read.get(i).getRead_id()==read.getRead_id()){
                 lstquest_readPrint.add(lstquest_read.get(i));
             }
         }
-        Reading read = lstread.get(0);
+        
         String[] readContent=read.getContent().split("\\|-line break-\\|");
         List<String> answer = new ArrayList<>();
         String[] ans = null;
@@ -99,6 +106,7 @@ public class ReadingTestServlet extends HttpServlet {
         lstquest_readPrint.get(0).getQuestRead_id();
         read.setDuration(1);
         answer.addAll(Arrays.asList(ans));
+        request.setAttribute("topic", topic);
         request.setAttribute("test_id", test_id);
         request.setAttribute("reading",read );
         request.setAttribute("readContent", readContent);

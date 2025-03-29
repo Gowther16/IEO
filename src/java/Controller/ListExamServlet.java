@@ -4,19 +4,22 @@
  */
 package Controller;
 
-import dal.Answer_WritingDAO;
+import Model.Exam;
+import dal.ExamDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author bangc
  */
-public class FinishTestServlet extends HttpServlet {
+public class ListExamServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,10 +38,10 @@ public class FinishTestServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet FinishTestServlet</title>");            
+            out.println("<title>Servlet ListExamServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet FinishTestServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ListExamServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -70,14 +73,11 @@ public class FinishTestServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String test = request.getParameter("test_id");
-        int test_id = Integer.parseInt(test);
-        String write = request.getParameter("write_id");
-        int write_id = Integer.parseInt(write);
-        String answer = request.getParameter("write");
-        Answer_WritingDAO dao = new Answer_WritingDAO();
-        int ans_write = dao.insertAnswer_WriteDAO(write_id, test_id, answer);
-        request.getRequestDispatcher("Home.jsp").forward(request, response);
+        List<Exam> lstexam = new ArrayList<>();
+        ExamDAO examdao = new ExamDAO();
+        lstexam = examdao.GetAllExam();
+        request.setAttribute("exam", lstexam);
+        request.getRequestDispatcher("ExamDetail.jsp").forward(request, response);
     }
 
     /**

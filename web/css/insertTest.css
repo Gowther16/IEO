@@ -1,222 +1,260 @@
+/* Base Styles */
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f8f9fa; /* Màu nền nhẹ nhàng hơn */
-    color: #333;
+    background-color: #f5f7fa;
+    color: #2d3748;
     line-height: 1.6;
 }
 
+/* Navigation Tabs */
 .nav {
     display: flex;
     justify-content: center;
-    background: linear-gradient(135deg, #ffffff, #f1f3f5); /* Gradient nhẹ */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Đổ bóng mềm mại */
-    padding: 15px 0;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 1rem 0;
     position: sticky;
     top: 0;
-    z-index: 1000;
-    border-bottom: 1px solid #e9ecef;
+    z-index: 100;
 }
 
 .nav button {
-    background-color: transparent;
-    color: #495057;
+    background: none;
     border: none;
-    padding: 12px 20px;
-    margin: 0 15px;
-    font-size: 16px;
+    padding: 0.75rem 1.5rem;
+    margin: 0 0.5rem;
+    font-size: 1rem;
     font-weight: 500;
+    color: #4a5568;
     cursor: pointer;
     transition: all 0.3s ease;
+    border-radius: 0.25rem;
     position: relative;
 }
 
 .nav button:hover {
-    color: #007bff;
+    color: #4299e1;
+    background-color: #ebf8ff;
 }
 
 .nav button.active {
-    color: #007bff;
-    border-bottom: 3px solid #007bff; /* Đường viền đậm hơn khi active */
+    color: #3182ce;
     font-weight: 600;
 }
 
-.nav button::after {
+.nav button.active::after {
     content: '';
     position: absolute;
-    width: 0;
-    height: 3px;
-    background: #007bff;
-    bottom: -3px;
+    bottom: -1px;
     left: 50%;
     transform: translateX(-50%);
-    transition: width 0.3s ease;
+    width: 60%;
+    height: 3px;
+    background-color: #3182ce;
+    border-radius: 3px 3px 0 0;
 }
 
-.nav button:hover::after {
-    width: 80%; /* Hiệu ứng kéo dài khi hover */
-}
-
+/* Tab Content */
 .tab {
     display: none;
-    padding: 25px;
-    margin: 30px auto;
-    max-width: 1000px; /* Tăng chiều rộng cho thoáng hơn */
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); /* Đổ bóng tinh tế */
-    animation: fadeIn 0.4s ease-in-out;
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 1200px;
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    animation: fadeIn 0.3s ease-out;
 }
 
 .tab.active {
     display: block;
 }
 
-h1, h2, h3, h4 {
-    color: #212529;
-    margin-bottom: 20px;
-}
-
+/* Headings */
 h1 {
-    font-size: 32px;
+    font-size: 2rem;
     font-weight: 700;
     text-align: center;
-    margin: 30px 0;
+    margin: 2rem 0;
+    color: #1a365d;
 }
 
 h2 {
-    font-size: 26px;
+    font-size: 1.5rem;
     font-weight: 600;
+    margin: 1.5rem 0 1rem;
+    color: #2b6cb0;
 }
 
 h3 {
-    font-size: 20px;
+    font-size: 1.25rem;
     font-weight: 500;
+    margin: 1.25rem 0 0.75rem;
+    color: #4a5568;
 }
 
-h4 {
-    font-size: 18px;
-    font-weight: 500;
-    color: #495057;
-}
-
-p {
-    color: #6c757d;
-    line-height: 1.8;
-}
-
-input, textarea {
+/* Form Elements */
+input[type="text"],
+input[type="file"],
+textarea {
     width: 100%;
-    padding: 12px 15px;
-    margin: 10px 0 15px 0;
-    border: 1px solid #dee2e6;
-    border-radius: 6px;
-    box-sizing: border-box;
-    font-size: 15px;
-    background-color: #f8f9fa;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    padding: 0.75rem 1rem;
+    margin: 0.5rem 0 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    background-color: #f8fafc;
+    transition: all 0.2s ease;
 }
 
-input:focus, textarea:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+input[type="text"]:focus,
+textarea:focus {
+    border-color: #63b3ed;
+    box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.2);
     outline: none;
+    background-color: white;
 }
 
 textarea {
-    resize: vertical; /* Chỉ cho phép thay đổi chiều cao */
-    min-height: 100px;
+    min-height: 150px;
+    resize: vertical;
 }
 
-button.addAnswerOption, 
-#addQuestionReading, 
-#addQuestionListening, 
-#addQuestionListeningWrite, 
-#addQuestionSpeaking, 
-button[type="submit"] {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 6px;
-    font-size: 15px;
-    font-weight: 500;
+/* Buttons */
+button {
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    margin-top: 15px;
-    display: inline-block;
+    transition: all 0.2s ease;
 }
 
-button.addAnswerOption:hover, 
-#addQuestionReading:hover, 
-#addQuestionListening:hover, 
-#addQuestionListeningWrite:hover, 
-#addQuestionSpeaking:hover, 
-button[type="submit"]:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px); /* Hiệu ứng nâng nhẹ */
+button[type="button"],
+button[type="submit"] {
+    border: none;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+}
+
+.addAnswerOption,
+#addQuestionReading,
+#addQuestionListening,
+#addQuestionListeningWrite,
+#addQuestionSpeaking {
+    background-color: #4299e1;
+    color: white;
+    margin-top: 1rem;
+}
+
+.addAnswerOption:hover,
+#addQuestionReading:hover,
+#addQuestionListening:hover,
+#addQuestionListeningWrite:hover,
+#addQuestionSpeaking:hover {
+    background-color: #3182ce;
+    transform: translateY(-1px);
 }
 
 button[type="submit"] {
-    background-color: #28a745; /* Màu xanh lá cho nút Save */
+    background-color: #48bb78;
+    color: white;
     display: block;
-    margin: 30px auto;
-    padding: 14px 40px;
-    font-size: 16px;
+    margin: 2rem auto;
+    padding: 0.875rem 2.5rem;
+    font-size: 1.125rem;
 }
 
 button[type="submit"]:hover {
-    background-color: #218838;
+    background-color: #38a169;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Question Containers */
 .question-container {
-    padding: 20px;
-    border: 1px solid #e9ecef;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    background-color: #fdfdfd; /* Nền nhẹ để phân biệt */
-    transition: box-shadow 0.3s ease;
+    padding: 1.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+    background-color: #f7fafc;
+    transition: box-shadow 0.2s ease;
 }
 
 .question-container:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Hiệu ứng khi hover */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .answerOptionsContainer {
-    margin-top: 15px;
-    padding-left: 20px;
+    margin-top: 1rem;
+    padding-left: 1rem;
 }
 
 .answer-option {
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
-    gap: 10px; /* Khoảng cách giữa các phần tử */
+    margin-bottom: 10px;
 }
 
 .answer-option label {
     min-width: 80px;
-    color: #495057;
-    font-weight: 400;
+    color: #4a5568;
 }
-
-.answer-option input[type="text"] {
-    flex: 1;
-    margin: 0;
+.answer-option textarea {
+    width: 100%; 
+    min-height: 100px; 
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical; 
 }
 
 .answer-option input[type="radio"] {
-    margin: 0 5px 0 15px;
+    margin-left: 10px; /* Tạo khoảng cách với ô nhập */
 }
 
+/* Animations */
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(15px);
+        transform: translateY(10px);
     }
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .nav {
+        flex-wrap: wrap;
+        padding: 0.5rem;
+    }
+    
+    .nav button {
+        padding: 0.5rem 1rem;
+        margin: 0.25rem;
+        font-size: 0.875rem;
+    }
+    
+    .tab {
+        padding: 1rem;
+        margin: 1rem;
+    }
+    
+    .question-container {
+        padding: 1rem;
+    }
+    
+    .answer-option {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .answer-option input[type="text"] {
+        width: 100%;
     }
 }

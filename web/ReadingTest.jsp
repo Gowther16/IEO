@@ -34,6 +34,8 @@
                         </c:forTokens>
                         <br>
                     </c:forEach>
+                        <input type="hidden" name="test_id" value="${test_id}" />
+                        <input type="hidden" name="topic" value="${topic}" />
                         <button type="submit" class="take_test_btn">Submit </button>
                 </form>
             </div>

@@ -18,7 +18,7 @@
                 </div>
                 <h2>Audio Listening</h2>
                 <audio id="audioPlayer" controls>
-                    <source src="AudioListening?audio=${listening.getVideo_listen()}" type="audio/mpeg">
+                    <source src="${listening.getVideo_listen()}" type="audio/mpeg">
                 </audio>
             </div>
 
@@ -39,6 +39,8 @@
                     <c:forEach items="${qlw}" var="s">
                         ${s.getQuestion_test()} <input type="text" name="answer_write_${s.getQuest_Listen()}"/><br>
                     </c:forEach>
+                        <input type="hidden" name="test_id" value="${test_id}" />
+                        <input type="hidden" name="topic" value="${topic}" />
                     <button type="submit" class="take_test_btn">Submit </button>
                 </form>
             </div>

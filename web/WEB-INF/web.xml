@@ -53,6 +53,38 @@
         <servlet-name>takeTest</servlet-name>
         <servlet-class>Controller.TakeTestServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>doExam</servlet-name>
+        <servlet-class>Controller.DoExamServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>listExam</servlet-name>
+        <servlet-class>Controller.ListExamServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>scoreTest</servlet-name>
+        <servlet-class>Controller.ScoreTestServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>scoreRead</servlet-name>
+        <servlet-class>Controller.ScoreReadServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>scoreListen</servlet-name>
+        <servlet-class>Controller.ScoreListenServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>scoreSpeak</servlet-name>
+        <servlet-class>Controller.ScoreSpeakServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>scoreWrite</servlet-name>
+        <servlet-class>Controller.ScoreWriteServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>finishScore</servlet-name>
+        <servlet-class>Controller.FinishScoreServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -136,6 +168,38 @@
     <servlet-mapping>
         <servlet-name>takeTest</servlet-name>
         <url-pattern>/takeTest</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>doExam</servlet-name>
+        <url-pattern>/doExam</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>listExam</servlet-name>
+        <url-pattern>/listExam</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>scoreTest</servlet-name>
+        <url-pattern>/scoreTest</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>scoreRead</servlet-name>
+        <url-pattern>/scoreRead</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>scoreListen</servlet-name>
+        <url-pattern>/scoreListen</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>scoreSpeak</servlet-name>
+        <url-pattern>/scoreSpeak</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>scoreWrite</servlet-name>
+        <url-pattern>/scoreWrite</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>finishScore</servlet-name>
+        <url-pattern>/finishScore</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>Home.jsp</welcome-file>

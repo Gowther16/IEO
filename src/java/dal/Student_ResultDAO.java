@@ -4,32 +4,36 @@
  */
 package dal;
 
-import Model.Questions_Listening_Write;
+import Model.Student_Results;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.sql.Statement;
 /**
  *
  * @author bangc
  */
-public class Questions_Listening_WriteDAO {
+public class Student_ResultDAO {
     Connection con = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
-    
-    public List<Questions_Listening_Write> GetAllQuestions_Speaking(){
-        List<Questions_Listening_Write> list = new ArrayList<>();
-        String sql = "select * from Questions_Listening_Write";
-        try{
+
+    public List<Student_Results> getAllStudentResults(){
+        List<Student_Results> list = new ArrayList<>();
+        String sql = "SELECT * FROM [dbo].[Student_Results]";
+        try {
             con = new DBContext().getConnection();
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while(rs.next()){
-                list.add(new Questions_Listening_Write(rs.getInt(1),rs.getInt(2),rs.getString(3)));
+             ps = con.prepareStatement(sql);
+             rs = ps.executeQuery();
+            while (rs.next()) {
+                Student_Results result = new Student_Results();
+                result.setResult_id(rs.getInt("result_id"));
+                result.setUser_id(rs.getInt("user_id"));
+                result.setTest_id(rs.getInt("test_id"));
+                result.setScore(rs.getInt("score"));
+                list.add(result);
             }
         }catch(Exception e){
             System.out.println(e.getMessage());
@@ -44,19 +48,20 @@ public class Questions_Listening_WriteDAO {
         }
         return list;
     }
-    public int InsertQuestions_Listening_Write(int listen_id,String question_text){
-        int qlw =0;
-        String sql = "INSERT INTO [Questions_Listening_Write] VALUES (?,?)";
+    public int insertStudentResult(int User_id,int Test_id,int Score) {
+        String sql = "INSERT INTO [dbo].[Student_Results] (user_id, test_id, score, completed_at) VALUES (?, ?, ?, ?)";
+        int sr =0;
         try{
-            con = new DBContext().getConnection();
-            ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, listen_id);
-            ps.setString(2, question_text);
+             con = new DBContext().getConnection();
+             ps = con.prepareStatement(sql);
+            ps.setInt(1, User_id);
+            ps.setInt(2, Test_id);
+            ps.setInt(3, Score);
             int result = ps.executeUpdate();
             if (result > 0) {
                 rs = ps.getGeneratedKeys();
                 if (rs.next()) {
-                    qlw = rs.getInt(1);
+                    sr = rs.getInt(1);
                 }
             }
         }catch(Exception e){
@@ -70,6 +75,6 @@ public class Questions_Listening_WriteDAO {
                 System.out.println("Error closing connections: " + e.getMessage());
             }
         }
-        return qlw;
+        return sr;
     }
 }

@@ -4,19 +4,29 @@
  */
 package Controller;
 
+import Model.Answer_Reading;
+import Model.Answer_Writing;
+import Model.Questions_Reading;
+import Model.Tests;
+import Model.User;
+import dal.Answer_ReadingDAO;
 import dal.Answer_WritingDAO;
+import dal.Questions_ReadingDAO;
+import dal.TestsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author bangc
  */
-public class FinishTestServlet extends HttpServlet {
+public class ScoreWriteServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,10 +45,10 @@ public class FinishTestServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet FinishTestServlet</title>");            
+            out.println("<title>Servlet ScoreWriteServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet FinishTestServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ScoreWriteServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -70,14 +80,30 @@ public class FinishTestServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        User user = (User) request.getSession().getAttribute("user");
+        int srd_id =(int) request.getAttribute("srd_id");
         String test = request.getParameter("test_id");
         int test_id = Integer.parseInt(test);
-        String write = request.getParameter("write_id");
-        int write_id = Integer.parseInt(write);
-        String answer = request.getParameter("write");
-        Answer_WritingDAO dao = new Answer_WritingDAO();
-        int ans_write = dao.insertAnswer_WriteDAO(write_id, test_id, answer);
-        request.getRequestDispatcher("Home.jsp").forward(request, response);
+        TestsDAO testdao = new TestsDAO();
+        List<Tests> lsttest = testdao.GetAllTests();
+        Tests test1 = new Tests();
+        for (int i = 0; i < lsttest.size(); i++) {
+            if(lsttest.get(i).getTest_id()==test_id){
+                test1=lsttest.get(i);
+            }
+        }
+        Answer_WritingDAO awd = new Answer_WritingDAO();
+        List<Answer_Writing> law = awd.getAllAnswerWriting();
+        Answer_Writing aw = new Answer_Writing();
+        for (int i = 0; i < law.size(); i++) {
+            if(law.get(i).getTest_id()==test_id){
+                aw=law.get(i);
+            }
+        }
+        request.setAttribute("aw", aw);
+        request.setAttribute("srd_id", srd_id);
+        request.setAttribute("test_id", test_id);
+        request.getRequestDispatcher("ScoreWrite.jsp").forward(request, response);
     }
 
     /**

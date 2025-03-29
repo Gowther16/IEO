@@ -4,14 +4,20 @@
  */
 package Controller;
 
+import Model.Exam;
+import Model.TopicExam;
 import Model.User;
+import dal.ExamDAO;
 import dal.TestsDAO;
+import dal.TopicExamDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -60,9 +66,19 @@ public class TakeTestServlet extends HttpServlet {
         String exam = request.getParameter("exam_id");
         int exam_id = Integer.parseInt(exam);
         User user = (User) request.getSession().getAttribute("user");
-        
         TestsDAO testdao = new TestsDAO();
         int test_id = testdao.InsertTests(user.getName(), user.getEmail(), user.getId(), exam_id);
+        ExamDAO examdao = new ExamDAO();
+        List<Exam> lstexam = new ArrayList<>();
+        lstexam = examdao.GetAllExam();
+        Exam e = new Exam();
+        for (int i = 0; i < lstexam.size(); i++) {
+            if(lstexam.get(i).getExam_id()==exam_id){
+                e = lstexam.get(i);
+            }
+        }
+        int topic =e.getTopic_id();
+        request.setAttribute("topic", topic);
         request.setAttribute("test_id", test_id);
         request.getRequestDispatcher("TakeTest.jsp").forward(request, response);
     }

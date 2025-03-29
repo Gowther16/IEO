@@ -87,10 +87,19 @@
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="TakeTest.jsp" >IELTS TEST</a>
+                                <form action="doExam" method="POST">
+                                    <button class="nav-link dropdown-toggle" type="submit">IELTS TEST</button>
+                                </form>
+                                
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="InsertTest.jsp" >Insert IELTS TEST</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <form action="listExam" method="POST">
+                                    <button class="nav-link dropdown-toggle" type="submit">Scoring TEST</button>
+                                </form>
+                                
                             </li>
                         </ul>
                         <li class="nav-item ">

@@ -4,19 +4,27 @@
  */
 package Controller;
 
-import dal.Answer_WritingDAO;
+import Model.Answer_Reading;
+import Model.Questions_Reading;
+import Model.Tests;
+import dal.Answer_ReadingDAO;
+import dal.Questions_ReadingDAO;
+import dal.ReadingDAO;
+import dal.TestsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author bangc
  */
-public class FinishTestServlet extends HttpServlet {
+public class ScoreReadServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,10 +43,10 @@ public class FinishTestServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet FinishTestServlet</title>");            
+            out.println("<title>Servlet ScoreReadServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet FinishTestServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ScoreReadServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -72,12 +80,25 @@ public class FinishTestServlet extends HttpServlet {
             throws ServletException, IOException {
         String test = request.getParameter("test_id");
         int test_id = Integer.parseInt(test);
-        String write = request.getParameter("write_id");
-        int write_id = Integer.parseInt(write);
-        String answer = request.getParameter("write");
-        Answer_WritingDAO dao = new Answer_WritingDAO();
-        int ans_write = dao.insertAnswer_WriteDAO(write_id, test_id, answer);
-        request.getRequestDispatcher("Home.jsp").forward(request, response);
+        TestsDAO testdao = new TestsDAO();
+        List<Tests> lsttest = testdao.GetAllTests();
+        Tests test1 = new Tests();
+        for (int i = 0; i < lsttest.size(); i++) {
+            if(lsttest.get(i).getTest_id()==test_id){
+                test1=lsttest.get(i);
+            }
+        }
+        Answer_ReadingDAO ard = new Answer_ReadingDAO();
+        List<Answer_Reading> lar = ard.getAllAnswerReading();
+        List<Answer_Reading> ar = new ArrayList<>();
+        for (int i = 0; i < lar.size(); i++) {
+            if(lar.get(i).getTest_id()==test_id){
+                ar.add(lar.get(i));
+            }
+        }
+        
+        request.setAttribute("test_id", test_id);
+        request.getRequestDispatcher("ScoreListen").forward(request, response);
     }
 
     /**

@@ -4,19 +4,22 @@
  */
 package Controller;
 
-import dal.Answer_WritingDAO;
+import Model.Tests;
+import dal.TestsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author bangc
  */
-public class FinishTestServlet extends HttpServlet {
+public class ScoreTestServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,10 +38,10 @@ public class FinishTestServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet FinishTestServlet</title>");            
+            out.println("<title>Servlet ScoreTestServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet FinishTestServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ScoreTestServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -70,14 +73,19 @@ public class FinishTestServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String test = request.getParameter("test_id");
-        int test_id = Integer.parseInt(test);
-        String write = request.getParameter("write_id");
-        int write_id = Integer.parseInt(write);
-        String answer = request.getParameter("write");
-        Answer_WritingDAO dao = new Answer_WritingDAO();
-        int ans_write = dao.insertAnswer_WriteDAO(write_id, test_id, answer);
-        request.getRequestDispatcher("Home.jsp").forward(request, response);
+        String exam = request.getParameter("exam_id");
+        int exam_id = Integer.parseInt(exam);
+        List<Tests> lsttest = new ArrayList<>();
+        TestsDAO testdao = new TestsDAO();
+        lsttest = testdao.GetAllTests();
+        List<Tests> work = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            if(lsttest.get(i).getExam_id()==exam_id){
+                work.add(lsttest.get(i));
+            }
+        }
+        request.setAttribute("exam", work);
+        request.getRequestDispatcher("ScoringExam.jsp").forward(request, response);
     }
 
     /**

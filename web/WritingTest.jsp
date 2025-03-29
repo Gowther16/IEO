@@ -19,8 +19,11 @@
         <div id="right-panel">
             <h2>Your Answer</h2>
             <p>Time: <span id="timer"></span></p>
-            <form class="headings" method="finishTest" method="POST">
+            <form class="headings" action="finishTest" method="POST">
                 <textarea id="writing" name="writing" rows="50" cols="70" placeholder="Input your writing here..."></textarea><br>
+                <input type="hidden" name="test_id" value="${test_id}" />
+                <input type="hidden" name="write_id" value="${writing.getWrite_id()}" />
+                
                 <button type="submit" class="take_test_btn">Submit </button>
             </form>
         </div>

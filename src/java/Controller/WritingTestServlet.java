@@ -12,7 +12,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import Model.Writing;
-import Mongodb.UploadMP3File;
+import dal.Answer_SpeakingDAO;
+import dal.Answer_WritingDAO;
 import dal.WritingDAO;
 import java.io.File;
 import java.util.*;
@@ -75,27 +76,28 @@ public class WritingTestServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String base64String = request.getParameter("recordedAudio");
-        if (base64String != null) {
-            int commaIndex = base64String.indexOf(',');
-            if (commaIndex != -1) {
-                String header = base64String.substring(0, commaIndex);
-                String data = base64String.substring(commaIndex + 1);
-                String format = header.substring(header.indexOf(":") + 1, header.indexOf(";"));
-                String extension = format.contains("mp3") ? "mp3" : "webm";
-                byte[] decodedBytes = Base64.getDecoder().decode(data);
-                String filename = "recording." + extension;
-                File file = new File(filename);
-                UploadMP3File upload = new UploadMP3File();
-                upload.uploadSpeaking(file);
-            }
-        }
+        String topic = request.getParameter("topic");
+        int topic_id = Integer.parseInt(topic);
+        String test = request.getParameter("test_id");
+        int test_id = Integer.parseInt(test);
+        String speak = request.getParameter("speak_id");
+        int write_id = Integer.parseInt(speak);
+        String answer = request.getParameter("video");
+        Answer_SpeakingDAO dao = new Answer_SpeakingDAO();
+        int ans_write = dao.insertAnswer_SpeakingDAO(write_id, test_id, answer);
 
         List<Writing> lstwrite = new ArrayList<>();
         WritingDAO writedao = new WritingDAO();
         lstwrite = writedao.GetAllWriting();
         Writing write_print = new Writing();
-        write_print = lstwrite.get(0);
+        for (int i = 0; i < lstwrite.size(); i++) {
+            if(lstwrite.get(i).getTopic_id()==topic_id){
+                write_print = lstwrite.get(i);
+            }
+        }
+        
+        request.setAttribute("topic", topic);
+        request.setAttribute("test_id", test_id);
         request.setAttribute("writing", write_print);
         request.getRequestDispatcher("WritingTest.jsp").forward(request, response);
     }

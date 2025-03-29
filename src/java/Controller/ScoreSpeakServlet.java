@@ -4,22 +4,29 @@
  */
 package Controller;
 
+import Model.Answer_Listening_Write;
+import Model.Answer_Speaking;
+import Model.Point_Listening;
+import Model.Tests;
+import Model.User;
+import com.mongodb.client.model.geojson.Point;
+import dal.Answer_SpeakingDAO;
+import dal.Point_ListeningDAO;
+import dal.TestsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.File;
-import java.io.FileInputStream;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import Mongodb.DownloadMP3File;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author bangc
  */
-@WebServlet(name = "AudioListening", urlPatterns = {"/AudioListening"})
-public class AudioListening extends HttpServlet {
+public class ScoreSpeakServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +45,10 @@ public class AudioListening extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AudioListening</title>");            
+            out.println("<title>Servlet ScoreSpeakServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AudioListening at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ScoreSpeakServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,18 +66,7 @@ public class AudioListening extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DownloadMP3File dmp3 = new DownloadMP3File();
-        String audio = request.getParameter("audio");
-        File MP3 = dmp3.downloadListening(audio);
-        response.setContentType("audio/mpeg");
-        response.setContentLength((int) MP3.length());
-        try (FileInputStream fis = new FileInputStream(MP3)) {
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = fis.read(buffer)) != -1) {
-                response.getOutputStream().write(buffer, 0, bytesRead);
-            }
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -84,7 +80,36 @@ public class AudioListening extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String test = request.getParameter("test_id");
+        int test_id = Integer.parseInt(test);
+        TestsDAO testdao = new TestsDAO();
+        List<Tests> lsttest = testdao.GetAllTests();
+        Tests test1 = new Tests();
+        for (int i = 0; i < lsttest.size(); i++) {
+            if(lsttest.get(i).getTest_id()==test_id){
+                test1=lsttest.get(i);
+            }
+        }
+        User user = (User) request.getSession().getAttribute("user");
+        int markW = (int) request.getAttribute("markW");
+        int Lmark=(int) request.getAttribute("mark");
+        int mark =(int) (markW+Lmark)/2;
+        Point_ListeningDAO pld = new Point_ListeningDAO();
+        int srd_id =(int) request.getAttribute("srd_id");
+        pld.InsertPoint_Listening(user.getId(), mark, test_id);
+        
+        List<Answer_Speaking> las = new ArrayList<>();
+        Answer_SpeakingDAO asd = new Answer_SpeakingDAO();
+        
+        
+        
+        
+        
+        
+        
+        request.setAttribute("srd_id", srd_id);
+        request.setAttribute("test_id", test_id);
+        request.getRequestDispatcher("ScoreListen.jsp").forward(request, response);
     }
 
     /**
