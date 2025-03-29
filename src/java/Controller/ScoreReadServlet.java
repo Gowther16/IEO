@@ -6,6 +6,7 @@ package Controller;
 
 import Model.Answer_Reading;
 import Model.Questions_Reading;
+import Model.ScoreExam;
 import Model.Tests;
 import dal.Answer_ReadingDAO;
 import dal.Questions_ReadingDAO;
@@ -88,6 +89,7 @@ public class ScoreReadServlet extends HttpServlet {
                 test1=lsttest.get(i);
             }
         }
+        List<ScoreExam> lse = new ArrayList<>();
         Answer_ReadingDAO ard = new Answer_ReadingDAO();
         List<Answer_Reading> lar = ard.getAllAnswerReading();
         List<Answer_Reading> ar = new ArrayList<>();
@@ -96,9 +98,23 @@ public class ScoreReadServlet extends HttpServlet {
                 ar.add(lar.get(i));
             }
         }
+        List<Questions_Reading> lstquest_read= new ArrayList<>();
+        Questions_ReadingDAO quest_readdao = new Questions_ReadingDAO();
+        lstquest_read = quest_readdao.GetAllQuestion_Reading();
         
+        for (int i = 0; i < ar.size(); i++) {
+            for (int j = 0; j < lstquest_read.size(); j++) {
+                if(ar.get(i).getQuestRead_id()==lstquest_read.get(j).getQuestRead_id()){
+                    ScoreExam se = new ScoreExam(i+1,lstquest_read.get(j).getQuestion_text(),ar.get(i).getContent_Answer());
+                    lse.add(se);
+                }
+            }
+        }
+        
+        request.setAttribute("lse", lse);
+        request.setAttribute("ar", ar);
         request.setAttribute("test_id", test_id);
-        request.getRequestDispatcher("ScoreListen").forward(request, response);
+        request.getRequestDispatcher("ScoreRead.jsp").forward(request, response);
     }
 
     /**

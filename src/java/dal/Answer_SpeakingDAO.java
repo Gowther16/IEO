@@ -24,6 +24,7 @@ public class Answer_SpeakingDAO {
         List<Answer_Speaking> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Answer_Speaking]";
         try {
+            con = new DBContext().getConnection();
              ps = con.prepareStatement(sql);
              rs = ps.executeQuery();
             while (rs.next()) {

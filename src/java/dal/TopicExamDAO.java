@@ -19,7 +19,7 @@ public class TopicExamDAO {
     ResultSet rs = null;
     public List<TopicExam> GetAllTopicExam(){
         List<TopicExam> list = new ArrayList<>();
-        String sql = "select * from TopicExam";
+        String sql = "select * from Topic_Exam";
         try{
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
@@ -42,7 +42,7 @@ public class TopicExamDAO {
     }
     public int InsertTopicExam(int create_id){
         int te = 0;
-        String sql = "INSERT INTO [TopicExam]  VALUES (?)";
+        String sql = "INSERT INTO [Topic_Exam]  VALUES (?)";
         try{
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);

@@ -24,7 +24,7 @@ public class Answer_WritingDAO {
         List<Answer_Writing> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Answer_Writing]";
         try {
-            
+            con = new DBContext().getConnection();
              ps = con.prepareStatement(sql);
              rs = ps.executeQuery();
             while (rs.next()) {

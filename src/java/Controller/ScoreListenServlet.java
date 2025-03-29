@@ -8,7 +8,9 @@ import Model.Answer_Listening_ChooseAnswer;
 import Model.Answer_Listening_Write;
 import Model.Answer_Reading;
 import Model.Questions_Listening_ChooseAnswer;
+import Model.Questions_Listening_Write;
 import Model.Questions_Reading;
+import Model.ScoreExam;
 import Model.Student_Results;
 import Model.Tests;
 import Model.User;
@@ -18,6 +20,7 @@ import dal.Answer_ReadingDAO;
 import dal.Point_ListeningDAO;
 import dal.Point_ReadingDAO;
 import dal.Questions_Listening_ChooseAnswerDAO;
+import dal.Questions_Listening_WriteDAO;
 import dal.Questions_ReadingDAO;
 import dal.Student_ResultDAO;
 import dal.TestsDAO;
@@ -104,9 +107,16 @@ public class ScoreListenServlet extends HttpServlet {
         
         
         User user = (User) request.getSession().getAttribute("user");
-       List<Answer_Reading> ar =(List<Answer_Reading>) request.getAttribute("ard");
-        int count=0;
-        Questions_ReadingDAO qrd = new Questions_ReadingDAO();
+        List<ScoreExam> lse = new ArrayList<>();
+        Answer_ReadingDAO ard = new Answer_ReadingDAO();
+        List<Answer_Reading> lar = ard.getAllAnswerReading();
+        List<Answer_Reading> ar = new ArrayList<>();
+        for (int i = 0; i < lar.size(); i++) {
+            if(lar.get(i).getTest_id()==test_id){
+                ar.add(lar.get(i));
+            }
+        }
+        int countT=0;
         List<Questions_Reading> lstquest_read= new ArrayList<>();
         Questions_ReadingDAO quest_readdao = new Questions_ReadingDAO();
         lstquest_read = quest_readdao.GetAllQuestion_Reading();
@@ -114,19 +124,21 @@ public class ScoreListenServlet extends HttpServlet {
             for (int j = 0; j < lstquest_read.size(); j++) {
                 if(lstquest_read.get(j).getQuestRead_id()==ar.get(i).getQuestRead_id()){
                     if(ar.get(i).getContent_Answer()==lstquest_read.get(j).getCorrect_answer()){
-                        count++;
+                        countT++;
                     }
                 }
             } 
         }
+        
+        int markR =(int)countT/ar.size()*10;
         Student_ResultDAO srd = new Student_ResultDAO();
         int srd_id = srd.insertStudentResult(lu.getId(), test_id, 0);
         Point_ReadingDAO prd = new Point_ReadingDAO();
-        prd.InsertPoint_Reading(user.getId(), count, srd_id);
+        prd.InsertPoint_Reading(user.getId(), markR, srd_id);
         
         List<Questions_Listening_ChooseAnswer> qlch = new ArrayList<>();
         Questions_Listening_ChooseAnswerDAO qlchdao = new Questions_Listening_ChooseAnswerDAO();
-        qlch = qlchdao.GetAllQuestions_Speaking();
+        qlch = qlchdao.GetAllQuestions_Listening_ChooseAnswer();
         List<Answer_Listening_ChooseAnswer> lalch = new ArrayList<>();
         Answer_Listening_ChooseAnswerDAO alcha = new Answer_Listening_ChooseAnswerDAO();
         lalch = alcha.getAllAnswerListeningChooseAnswer();
@@ -137,16 +149,10 @@ public class ScoreListenServlet extends HttpServlet {
                 alch.add(lalch.get(i));
             }
         }
-        int countL=0;
-        for (int i = 0; i <alch.size(); i++) {
-            for (int j = 0; j < qlch.size(); j++) {
-                if(qlch.get(j).getQuestListen_id()==alch.get(i).getQuestListen_id()){
-                    if(alch.get(i).getContent_Answer()==lstquest_read.get(j).getCorrect_answer()){
-                        countL++;
-                    }
-                }
-            } 
-        }
+        
+        List<Questions_Listening_Write> qlw = new ArrayList<>();
+        Questions_Listening_WriteDAO qlwdao = new Questions_Listening_WriteDAO();
+        qlw = qlwdao.GetAllQuestions_Listening_Write();
         List<Answer_Listening_Write> lalb = new ArrayList<>();
         Answer_Listening_WriteDAO alw = new Answer_Listening_WriteDAO();
         lalb = alw.getAllAnswerListeningWrite();
@@ -156,13 +162,35 @@ public class ScoreListenServlet extends HttpServlet {
                 alb.add(lalb.get(i));
             }
         }
+        
+        List<ScoreExam> lsech = new ArrayList<>();
+        List<ScoreExam> lsew = new ArrayList<>();
+        
+        for (int i = 0; i < alch.size(); i++) {
+            for (int j = 0; j < qlch.size(); j++) {
+                if(alch.get(i).getQuestListen_id()==qlch.get(j).getQuestListen_id()){
+                     ScoreExam sech =new ScoreExam(i+1, qlch.get(j).getQuestion_text(), alch.get(i).getContent_Answer());
+                     lsech.add(sech);
+                }
+            }
+        }
+        for (int i = 0; i < alb.size(); i++) {
+            for (int j = 0; j < qlw.size(); j++) {
+                if(alb.get(i).getQuest_Listen()==qlw.get(j).getQuest_Listen()){
+                     ScoreExam sew =new ScoreExam(i+1, qlw.get(j).getQuestion_test(), alb.get(i).getContent_Answer());
+                     lsew.add(sew);
+                }
+            }
+        }
+        
+        request.setAttribute("lsech", lsech);
+        request.setAttribute("lsew", lsew);
         request.setAttribute("alw", alb);
-        request.setAttribute("mark", countL);
+        request.setAttribute("alch", alch);
         request.setAttribute("srd_id", srd_id);
         request.setAttribute("test_id", test_id);
         request.getRequestDispatcher("ScoreListen.jsp").forward(request, response);
     }
-
     /**
      * Returns a short description of the servlet.
      *

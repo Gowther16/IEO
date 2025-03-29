@@ -4,7 +4,7 @@
  */
 package dal;
 
-import Model.Point_Reading;
+import Model.Point_Listening;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,15 +21,15 @@ public class Point_ListeningDAO {
     PreparedStatement ps = null;
     ResultSet rs = null;
     
-    public List<Point_Reading> GetAllPoint_Listening(){
-        List<Point_Reading> list = new ArrayList<>();
+    public List<Point_Listening> GetAllPoint_Listening(){
+        List<Point_Listening> list = new ArrayList<>();
         String sql = "select * from Point_Listening";
         try{
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next()){
-                list.add(new Point_Reading(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getInt(4)));
+                list.add(new Point_Listening(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getInt(4)));
             }
         }catch(Exception e){
             System.out.println(e.getMessage());

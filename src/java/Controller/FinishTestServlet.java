@@ -74,7 +74,7 @@ public class FinishTestServlet extends HttpServlet {
         int test_id = Integer.parseInt(test);
         String write = request.getParameter("write_id");
         int write_id = Integer.parseInt(write);
-        String answer = request.getParameter("write");
+        String answer = request.getParameter("writing");
         Answer_WritingDAO dao = new Answer_WritingDAO();
         int ans_write = dao.insertAnswer_WriteDAO(write_id, test_id, answer);
         request.getRequestDispatcher("Home.jsp").forward(request, response);

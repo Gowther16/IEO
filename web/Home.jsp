@@ -51,7 +51,7 @@
 
         <!--Footer-->
         <jsp:include page="Footer.jsp"></jsp:include>
-        <<script src="js/main.js"></script>>
+        <script src="js/main.js"></script>
     </body>
 
 </html>

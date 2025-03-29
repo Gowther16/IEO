@@ -88,7 +88,7 @@ public class SpeakingTestServlet extends HttpServlet {
         Enumeration<String> parameterNames = request.getParameterNames();
         while (parameterNames.hasMoreElements()) {
             String paramName = parameterNames.nextElement();
-            if (paramName.startsWith("answer__choose_")) {
+            if (paramName.startsWith("answer_choose_")) {
                 try {
                     String questListenChoose_id_str = paramName.substring("answer_choose_".length());
                     int questListenChoose_id = Integer.parseInt(questListenChoose_id_str);

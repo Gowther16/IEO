@@ -24,6 +24,8 @@
 
         <!-- Custom CSS -->
         <link rel="stylesheet" href="css/styleindex.css">
+        
+        <link rel="stylesheet" href="css/scoring.css"/>
     </head>
 
     <body>
@@ -32,15 +34,15 @@
         <div>
             <h2>Scoring Test</h2>
             <div>
-                <div class="container mt-4">
-                    <h2>Scoring Test</h2>
+                <div >
                     <div class="table-responsive">
-                        <table class="table table-striped table-hover">
+                        <table class="table table-striped table-hover table-bordered">
                             <thead class="table-dark">
                                 <tr>
                                     <th>Test</th>
                                     <th>Student Name</th>
                                     <th>Email</th>
+                                    <th>Status</th>
                                     <th>Score</th>
                                 </tr>
                             </thead>
@@ -48,13 +50,13 @@
                                 <c:forEach var="r" items="${exam}">
                                 <form action="scoreRead" method="POST">
                                     <tr>
-                                        <td>${r.getTestId()}<input type="hidden" name="test_id" value="${r.getTestId()}"/></td>
-                                        <td>${r.getStudent_name()}<input type="hidden" name="test_id" value="${r.getStudent_name()}"/></td>
-                                        <td>${r.getEmail()}<input type="hidden" name="test_id" value="${r.getEmail()}"/></td>
+                                        <td>${r.getTest_id()}<input type="hidden" name="test_id" value="${r.getTest_id()}"/></td>
+                                        <td>${r.getStudentName()}</td>
+                                        <td>${r.getEmail()}</td>
+                                        <td>${r.getStatus()}</td>
                                         <td><button type="submit">Score</button></td>
                                     </tr>
                                 </form>
-                                    
                                 </c:forEach>
                             </tbody>
                         </table>

@@ -21,7 +21,7 @@ public class Questions_Listening_WriteDAO {
     PreparedStatement ps = null;
     ResultSet rs = null;
     
-    public List<Questions_Listening_Write> GetAllQuestions_Speaking(){
+    public List<Questions_Listening_Write> GetAllQuestions_Listening_Write(){
         List<Questions_Listening_Write> list = new ArrayList<>();
         String sql = "select * from Questions_Listening_Write";
         try{

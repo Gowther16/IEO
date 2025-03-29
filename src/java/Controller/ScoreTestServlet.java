@@ -4,7 +4,10 @@
  */
 package Controller;
 
+import Model.StudentTest;
+import Model.Student_Results;
 import Model.Tests;
+import dal.Student_ResultDAO;
 import dal.TestsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -79,15 +82,31 @@ public class ScoreTestServlet extends HttpServlet {
         TestsDAO testdao = new TestsDAO();
         lsttest = testdao.GetAllTests();
         List<Tests> work = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < lsttest.size(); i++) {
             if(lsttest.get(i).getExam_id()==exam_id){
                 work.add(lsttest.get(i));
             }
         }
-        request.setAttribute("exam", work);
+        Student_ResultDAO srd = new Student_ResultDAO();
+        
+        List<StudentTest> lst = new ArrayList<>();
+        for (int i = 0; i < work.size(); i++) {
+            StudentTest studentTest = new StudentTest();
+            studentTest.setTest_id(work.get(i).getTest_id());
+            studentTest.setStudentName(work.get(i).getStudent_name());
+            studentTest.setEmail(work.get(i).getEmail());
+            List<Student_Results> sr = srd.findStudentResultByTestId(work.get(i).getTest_id());
+            if(sr.isEmpty()){
+                studentTest.setStatus("Pending");
+            }else{
+                studentTest.setStatus("Pointed");
+            }
+            lst.add(studentTest);
+        }
+        request.setAttribute("exam", lst);
         request.getRequestDispatcher("ScoringExam.jsp").forward(request, response);
     }
-
+    
     /**
      * Returns a short description of the servlet.
      *

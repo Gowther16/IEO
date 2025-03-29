@@ -31,9 +31,11 @@
                         <c:forTokens var="option" items="${r.getAnswer_options()}" delims="|">
                             <input type="radio" name="answer_${r.getQuestRead_id()}" value="${option}" id="option_${r.getQuestRead_id()}_${option}" />
                             <label for="option_${r.getQuestRead_id()}_${option}">${option}</label><br/>
+                            <input type="radio" name="answer_${r.getQuestRead_id()}" value="" id="hiddenRadio" style="display: none;" checked>
                         </c:forTokens>
                         <br>
                     </c:forEach>
+                        <input type="hidden" name="ar" value="${ar}">
                         <input type="hidden" name="test_id" value="${test_id}" />
                         <input type="hidden" name="topic" value="${topic}" />
                         <button type="submit" class="take_test_btn">Submit </button>

@@ -30,8 +30,9 @@
                     <c:forEach items="${qlchoose}" var="r">
                         <h4>${r.getQuestion_text()}</h4>
                         <c:forTokens var="option" items="${r.getAnswer_options()}" delims="|">
-                            <input type="radio" name="answer_choose_${r.getQuestion_text()}" value="${option}" id="option_${r.getQuestion_text()}_${option}" />
+                            <input type="radio" name="answer_choose_${r.getQuestListen_id()}" value="${option}" id="option_${r.getQuestion_text()}_${option}" />
                             <label for="option_${r.getQuestion_text()}_${option}">${option}</label><br/>
+                            <input type="radio" name="answer_choose_${r.getQuestListen_id()}" value="" id="hiddenRadio" style="display: none;" checked>
                         </c:forTokens>
                         <br>
                     </c:forEach>

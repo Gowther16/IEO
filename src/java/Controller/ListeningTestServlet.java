@@ -116,8 +116,8 @@ public class ListeningTestServlet extends HttpServlet {
         Questions_Listening_ChooseAnswerDAO qlchoosedao = new Questions_Listening_ChooseAnswerDAO();
         Questions_Listening_WriteDAO qlwdao = new Questions_Listening_WriteDAO();
         lstlisten = listendao.GetAllListening();
-        lstqlchoose = qlchoosedao.GetAllQuestions_Speaking();
-        lstqlw = qlwdao.GetAllQuestions_Speaking();
+        lstqlchoose = qlchoosedao.GetAllQuestions_Listening_ChooseAnswer();
+        lstqlw = qlwdao.GetAllQuestions_Listening_Write();
         Listening listen = new Listening();
         for (int i = 0; i < lstlisten.size(); i++) {
             if(lstlisten.get(i).getTopic_id()==topic_id){

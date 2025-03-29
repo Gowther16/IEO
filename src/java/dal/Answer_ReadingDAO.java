@@ -23,17 +23,13 @@ public class Answer_ReadingDAO {
     
     public List<Answer_Reading> getAllAnswerReading(){
         List<Answer_Reading> list = new ArrayList<>();
-        String sql = "SELECT * FROM [dbo].[Answer_Reading]";
+        String sql = "SELECT * FROM Answer_Reading";
         try {
+            con = new DBContext().getConnection();
              ps = con.prepareStatement(sql);
              rs = ps.executeQuery();
             while (rs.next()) {
-                Answer_Reading answer = new Answer_Reading();
-                answer.setAnswer_id(rs.getInt("answer_id"));
-                answer.setQuestRead_id(rs.getInt("questRead_id"));
-                answer.setTest_id(rs.getInt("test_id"));
-                answer.setContent_Answer(rs.getString("content_Answer"));
-                list.add(answer);
+                list.add(new Answer_Reading(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4)));
             }
         }catch(Exception e){
             System.out.println(e.getMessage());

@@ -21,7 +21,7 @@ public class Questions_Listening_ChooseAnswerDAO {
     PreparedStatement ps = null;
     ResultSet rs = null;
     
-    public List<Questions_Listening_ChooseAnswer> GetAllQuestions_Speaking(){
+    public List<Questions_Listening_ChooseAnswer> GetAllQuestions_Listening_ChooseAnswer(){
         List<Questions_Listening_ChooseAnswer> list = new ArrayList<>();
         String sql = "select * from Questions_Listening_ChooseAnswer";
         try{

@@ -102,11 +102,11 @@ public class InsertTestServlet extends HttpServlet {
             int readingId = readingDAO.InsertReading(topicId, readingDuration, readingTitle, readingContent);
 
             Questions_ReadingDAO qrDAO = new Questions_ReadingDAO();
-            int questionCountR = countQuestions(request, "questionTextR_");
+            int questionCountR = countQuestions(request, "questionCountR_");
             for (int i = 1; i <= questionCountR; i++) {
                 String questionText = request.getParameter("questionTextR_" + i);
                 if (questionText != null && !questionText.isEmpty()) {
-                    String optionCountStr = request.getParameter("questionTextR_" + i);
+                    String optionCountStr = request.getParameter("optionCountR_" + i);
                     int optionCount = Integer.parseInt(optionCountStr);
                     String explanation ="";
                     String options = null;
@@ -132,11 +132,11 @@ public class InsertTestServlet extends HttpServlet {
         int listeningId = listeningDAO.InsertListening(topicId, 30, listeningFile);
 
         Questions_Listening_ChooseAnswerDAO qlcDAO = new Questions_Listening_ChooseAnswerDAO();
-        int questionCountL = countQuestions(request, "questionTextL_");
+        int questionCountL = countQuestions(request, "questionCountL_");
         for (int i = 1; i <= questionCountL; i++) {
             String questionText = request.getParameter("questionTextL_" + i);
             if (questionText != null && !questionText.isEmpty()) {
-                String optionCountStr = request.getParameter("questionTextL_" + i);
+                String optionCountStr = request.getParameter("optionCountL_" + i);
                 int optionCount = Integer.parseInt(optionCountStr);
                 String explanation ="";
                 String options = null;

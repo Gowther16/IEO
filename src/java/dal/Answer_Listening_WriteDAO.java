@@ -25,6 +25,7 @@ public class Answer_Listening_WriteDAO {
         List<Answer_Listening_Write> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Answer_Listening_Write]";
         try {
+            con = new DBContext().getConnection();
              ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery();
             while (rs.next()) {

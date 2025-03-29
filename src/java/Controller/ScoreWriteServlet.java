@@ -9,10 +9,13 @@ import Model.Answer_Writing;
 import Model.Questions_Reading;
 import Model.Tests;
 import Model.User;
+import Model.Writing;
 import dal.Answer_ReadingDAO;
 import dal.Answer_WritingDAO;
+import dal.Point_SpeakingDAO;
 import dal.Questions_ReadingDAO;
 import dal.TestsDAO;
+import dal.WritingDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -81,7 +84,8 @@ public class ScoreWriteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
-        int srd_id =(int) request.getAttribute("srd_id");
+        String srd = request.getParameter("srd_id");
+        int srd_id = Integer.parseInt(srd);
         String test = request.getParameter("test_id");
         int test_id = Integer.parseInt(test);
         TestsDAO testdao = new TestsDAO();
@@ -92,6 +96,11 @@ public class ScoreWriteServlet extends HttpServlet {
                 test1=lsttest.get(i);
             }
         }
+        String m= request.getParameter("mark");
+        int mark =Integer.parseInt(m);
+        Point_SpeakingDAO psd = new Point_SpeakingDAO();
+        psd.InsertPoint_Speaking(user.getId(), mark, srd_id);
+        
         Answer_WritingDAO awd = new Answer_WritingDAO();
         List<Answer_Writing> law = awd.getAllAnswerWriting();
         Answer_Writing aw = new Answer_Writing();
@@ -100,6 +109,10 @@ public class ScoreWriteServlet extends HttpServlet {
                 aw=law.get(i);
             }
         }
+        WritingDAO qwd = new WritingDAO();
+        List<Writing> lw = qwd.GetAllWriting();
+        Writing w = new Writing();
+        request.setAttribute("w", w);
         request.setAttribute("aw", aw);
         request.setAttribute("srd_id", srd_id);
         request.setAttribute("test_id", test_id);
