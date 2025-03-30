@@ -18,16 +18,17 @@ public class User {
     private Date lastLogin;
     private String phone;
     private Date birthdate;
+    private int role;
 
-    public User(int Id, String name, String email, String password, Date createdAt, Date lastLogin, String phone, Date birthdate) {
+    public User(int id, String name, String email, String password, Date birth, String phone, Date created, Date lastLogin) {
         this.Id = Id;
         this.name = name;
         this.email = email;
         this.password = password;
+        this.birthdate = birthdate;
+        this.phone = phone;
         this.createdAt = createdAt;
         this.lastLogin = lastLogin;
-        this.phone = phone;
-        this.birthdate = birthdate;
     }
 
     public User(String name, String email, String password, String phone, Date birthdate) {
@@ -37,6 +38,12 @@ public class User {
         this.password = password;
         this.phone = phone;
         this.birthdate = birthdate;
+    }
+
+    public User(int Id, String name, String email) {
+        this.Id = Id;
+        this.name = name;
+        this.email = email;
     }
 
  
@@ -109,9 +116,17 @@ public class User {
         this.birthdate = birthdate;
     }
 
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
-        return "User{" + "Id=" + Id + ", name=" + name + ", email=" + email + ", password=" + password + ", createdAt=" + createdAt + ", lastLogin=" + lastLogin + ", phone=" + phone + ", birthdate=" + birthdate + '}';
+        return "User{" + "Id=" + Id + ", name=" + name + ", email=" + email + ", password=" + password + ", createdAt=" + createdAt + ", lastLogin=" + lastLogin + ", phone=" + phone + ", birthdate=" + birthdate + ", role=" + role + '}';
     }
 
   

@@ -52,7 +52,7 @@
                         <div class="answerOptionsContainer">
                             <div class="answer-option">
                                 <label for="answerOptionR1_1">Option 1:</label>
-                                <input type="textera" id="answerOptionR1_1" name="answerOptionR_1_1" required>
+                                <input type="text" id="answerOptionR1_1" name="answerOptionR_1_1" required>
                                 <input type="radio" id="correctAnswerR1_1" name="correctAnswerR_1" value="" required>
                                 <label for="correctAnswerR1_1">Correct</label>
                             </div>
@@ -64,7 +64,7 @@
             </div>
             <div id="listening" class="tab">
                 <h1>Listening</h1>
-                <input type="file" name="listeningFile" id="listening" accept=".mp3" required><br>
+                <input type="file" name="listeningFile" id="listeningfile" accept=".mp3" required><br>
                 <button type="button" id="play">
                         <i class="fas fa-play"></i>
                     </button>
@@ -89,7 +89,7 @@
                         <div class="answerOptionsContainer">
                             <div class="answer-option">
                                 <label for="answerOptionL1_1">Option:</label>
-                                <input type="textera" id="answerOptionL1_1" name="answerOptionL_1_1" required>
+                                <input type="text" id="answerOptionL1_1" name="answerOptionL_1_1" required>
                                 <input type="radio" id="correctAnswerL1_1" name="correctAnswerL_1" value="" required>
                                 <label for="correctAnswerL1_1">Correct</label>
                             </div>
@@ -147,31 +147,31 @@
     
     document.getElementById("addQuestionReading").addEventListener("click", function () {
         questionCountR++;
-        answerOptionCountsR[questionCountR] = 1; // Khởi tạo số đáp án cho câu hỏi mới
+        answerOptionCountsR[questionCountR] = 1; 
         const container = document.getElementById("questionsContainerReading");
         const newQuestionDiv = document.createElement("div");
         newQuestionDiv.classList.add("question-container");
         newQuestionDiv.innerHTML = `
-            <h2>Question ${questionCountR}</h2>
+            <h2>Question `+questionCountR+`</h2>
             <div>
-                <label for="questionTextR${questionCountR}">Question:</label><br>
-                <textarea id="questionTextR${questionCountR}" name="questionTextR_${questionCountR}" rows="4" cols="50" required></textarea>
+                <label for="questionTextR`+questionCountR+`">Question:</label><br>
+                <textarea id="questionTextR`+questionCountR+`" name="questionTextR_`+questionCountR+`" rows="4" cols="50" required></textarea>
             </div>
             <h3>Explanation</h3>
             <div>
-                <label for="explantionR${questionCountR}">Question:</label><br>
-                <textarea id="explantionTextR${questionCountR}" name="explantionTextR_${questionCountR}" rows="4" cols="50" required></textarea>
+                <label for="explantionR`+questionCountR+`">Question:</label><br>
+                <textarea id="explantionTextR`+questionCountR+`" name="explanationR_`+questionCountR+`" rows="4" cols="50" required></textarea>
             </div>
             <h3>Answer Options</h3>
             <div class="answerOptionsContainer">
                 <div class="answer-option">
-                    <label for="answerOptionR${questionCountR}_1">Option 1:</label>
-                    <input type="textera" id="answerOptionR${questionCountR}_1" name="answerOptionR_${questionCountR}_1" required>
-                    <input type="radio" id="correctAnswerR${questionCountR}_1" name="correctAnswerR_${questionCountR}" value="0" required>
-                    <label for="correctAnswerR${questionCountR}_1">Correct</label>
+                    <label for="answerOptionR`+questionCountR+`_1">Option 1:</label>
+                    <input type="text" id="answerOptionR`+questionCountR+`_1" name="answerOptionR_`+questionCountR+`_1" required>
+                    <input type="radio" id="correctAnswerR`+questionCountR+`_1" name="correctAnswerR_`+questionCountR+`" value="0" required>
+                    <label for="correctAnswerR`+questionCountR+`_1">Correct</label>
                 </div>
             </div>
-            <button type="button" class="addAnswerOption" data-question-id="${questionCountR}" data-tab="reading">Add Answer Option</button>
+            <button type="button" class="addAnswerOption" data-question-id="`+questionCountR+`" data-tab="reading">Add Answer Option</button>
         `;
         container.appendChild(newQuestionDiv);
     });
@@ -179,31 +179,31 @@
     
     document.getElementById("addQuestionListening").addEventListener("click", function () {
         questionCountL++;
-        answerOptionCountsL[questionCountL] = 1; // Khởi tạo số đáp án cho câu hỏi mới
+        answerOptionCountsL[questionCountL] = 1; 
         const container = document.getElementById("questionsContainerListening");
         const newQuestionDiv = document.createElement("div");
         newQuestionDiv.classList.add("question-container");
         newQuestionDiv.innerHTML = `
-            <h2>Question ${questionCountL}</h2>
+            <h2>Question `+questionCountL+`</h2>
             <div>
-                <label for="questionTextL${questionCountL}">Question:</label><br>
-                <textarea id="questionTextL${questionCountL}" name="questionTextL_${questionCountL}" rows="4" cols="50" required></textarea>
+                <label for="questionTextL`+questionCountL+`">Question:</label><br>
+                <textarea id="questionTextL`+questionCountL+`" name="questionTextL_`+questionCountL+`" rows="4" cols="50" required></textarea>
             </div>
             <h3>Explanation</h3>
             <div>
-                <label for="explantionL${questionCountL}">Question:</label><br>
-                <textarea id="explantionTextL${questionCountL}" name="explantionTextL_${questionCountL}" rows="4" cols="50" required></textarea>
+                <label for="explantionL`+questionCountL+`">Question:</label><br>
+                <textarea id="explantionTextL`+questionCountL+`" name="explanationL_`+questionCountL+`" rows="4" cols="50" required></textarea>
             </div>
             <h3>Answer Options</h3>
             <div class="answerOptionsContainer">
                 <div class="answer-option">
-                    <label for="answerOptionL${questionCountL}_1">Option 1:</label>
-                    <input type="text" id="answerOptionL${questionCountL}_1" name="answerOptionL_${questionCountL}_1" required>
-                    <input type="radio" id="correctAnswerL${questionCountL}_1" name="correctAnswerL_${questionCountL}" value="0" required>
-                    <label for="correctAnswerL${questionCountL}_1">Correct</label>
+                    <label for="answerOptionL`+questionCountL+`_1">Option 1:</label>
+                    <input type="text" id="answerOptionL`+questionCountL+`_1" name="answerOptionL_`+questionCountL+`_1" required>
+                    <input type="radio" id="correctAnswerL`+questionCountL+`_1" name="correctAnswerL_`+questionCountL+`" value="0" required>
+                    <label for="correctAnswerL`+questionCountL+`_1">Correct</label>
                 </div>
             </div>
-            <button type="button" class="addAnswerOption" data-question-id="${questionCountL}" data-tab="listening">Add Answer Option</button>
+            <button type="button" class="addAnswerOption" data-question-id="`+questionCountL+`" data-tab="listening">Add Answer Option</button>
         `;
         container.appendChild(newQuestionDiv);
     });
@@ -215,10 +215,10 @@
         const newQuestionDiv = document.createElement("div");
         newQuestionDiv.classList.add("question-container");
         newQuestionDiv.innerHTML = `
-            <h2>Question ${questionCountLW}</h2>
+            <h2>Question`+questionCountLW+`</h2>
             <div>
-                <label for="questionTextLW${questionCountLW}">Question:</label><br>
-                <textarea id="questionTextLW${questionCountLW}" name="questionTextLW_${questionCountLW}" rows="4" cols="50" required></textarea>
+                <label for="questionTextLW`+questionCountLW+`">Question:</label><br>
+                <textarea id="questionTextLW`+questionCountLW+`" name="questionTextLW_`+questionCountLW+`" rows="4" cols="50" required></textarea>
             </div>
         `;
         container.appendChild(newQuestionDiv);
@@ -231,10 +231,10 @@
         const newQuestionDiv = document.createElement("div");
         newQuestionDiv.classList.add("question-container");
         newQuestionDiv.innerHTML = `
-            <h2>Question ${questionCountS}</h2>
+            <h2>Question` +questionCountS+`</h2>
             <div>
-                <label for="questionTextS${questionCountS}">Question:</label><br>
-                <textarea id="questionTextS${questionCountS}" name="questionTextS_${questionCountS}" rows="4" cols="50" required></textarea>
+                <label for="questionTextS`+questionCountS+`">Question:</label><br>
+                <textarea id="questionTextS`+questionCountS+`" name="questionTextS_`+questionCountS+`" rows="4" cols="50" required></textarea>
             </div>
         `;
         container.appendChild(newQuestionDiv);
@@ -257,7 +257,7 @@
             newOptionDiv.innerHTML =
     '<label for="answerOption' + prefix + questionId + '_' + answerOptionCount + '">Option ' + answerOptionCount + ':</label>' +
     '<input type="text" id="answerOption' + prefix + questionId + '_' + answerOptionCount + '" name="answerOption' + prefix + '_' + questionId + '_' + answerOptionCount + '" required>' +
-    '<input type="radio" id="correctAnswer' + prefix + questionId + '_' + answerOptionCount + '" name="correctAnswer' + prefix + '_' + questionId + '" value="" required>' +
+    '<input type="radio" id="correctAnswer' + prefix + questionId + '_' + answerOptionCount + '" name="correctAnswer' + prefix + '_' + questionId + '" value="' + (answerOptionCount - 1) + '" required>' +
     '<label for="correctAnswer' + prefix + questionId + '_' + answerOptionCount + '">Correct</label>';
             container.appendChild(newOptionDiv);
         }
@@ -277,7 +277,7 @@
     }
 });
     
-    const fileInput = document.getElementById('listening');
+    const fileInput = document.getElementById('listeningfile');
         const playButton = document.getElementById('play');
         let selectedFile;
 
@@ -289,7 +289,7 @@
             if (selectedFile) {
                 playButton.disabled = false;
                 uploadButton.disabled = false;
-                document.getElementById('output').innerHTML = `Selected file: ${selectedFile.name}`;
+                document.getElementById('output').innerHTML = `Selected file:` +selectedFile.name;
             }
             async () => {
             if (!selectedFile) return alert("No file selected!");
@@ -309,7 +309,8 @@
                 const data = await response.json();
                 if (data.secure_url) {
                     document.getElementById('output').innerHTML = 
-                        `Upload successful! <br><a href="${data.secure_url}" target="_blank">Download Audio</a>`;
+                        `Upload successful!`;
+                document.querySelector('input[name="video"]').value = data.secure_url;
                 } else {
                     document.getElementById('output').innerHTML = "Upload failed!";
                 }

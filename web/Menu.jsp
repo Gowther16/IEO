@@ -1,35 +1,28 @@
-
-<%-- 
-    Document   : Menu
-    Created on : Mar 6, 2025, 11:07:53 PM
-    Author     : admin
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html lang="en">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>IEO</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IEO</title>
 
-        <!-- Bootstrap CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-        <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 
-        <!-- jQuery -->
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-        <!-- Bootstrap JS Bundle -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="css/styleindex.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styleindex.css">
     <header>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+        <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
@@ -63,10 +56,10 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="examDropdown" role="button" data-bs-toggle="dropdown">IELTS Exam Library</a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="ListeningTest.jsp">Ielts Listening test</a></li>
-                                    <li><a class="dropdown-item" href="ReadingTest.jsp">Ielts Reading test</a></li>
-                                    <li><a class="dropdown-item" href="WritingTest.jsp">Ielts Writing test</a></li>
-                                    <li><a class="dropdown-item" href="SpeakingTest.jsp">Ielts Speaking test</a></li>
+                                    <li><a class="dropdown-item" href="ListeningMockTest.jsp">Ielts Listening Test</a></li>
+                                    <li><a class="dropdown-item" href="ReadingMockTest.jsp">Ielts Reading Test</a></li>
+                                    <li><a class="dropdown-item" href="WritingMockTest.jsp">Ielts Writing Test</a></li>
+                                    <li><a class="dropdown-item" href="SpeakingMockTest.jsp">Ielts Speaking Test</a></li>
                                     <li><a class="dropdown-item" href="TestCollection.jsp">Ielts Test collection</a></li>
                                 </ul>
                             </li>
@@ -86,21 +79,47 @@
                                     <li><a class="dropdown-item" href="#">Sample Question</a></li>
                                 </ul>
                             </li>
-                            <li class="nav-item dropdown">
-                                <form action="doExam" method="POST">
-                                    <button class="nav-link dropdown-toggle" type="submit">IELTS TEST</button>
-                                </form>
-                                
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="InsertTest.jsp" >Insert IELTS TEST</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <form action="listExam" method="POST">
-                                    <button class="nav-link dropdown-toggle" type="submit">Scoring TEST</button>
-                                </form>
-                                
-                            </li>
+                            <c:if test = "${sessionScope.user != null && sessionScope.user.role == 2}">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="prepDropdown" role="button" data-bs-toggle="dropdown">Information</a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="FAQServlet">Manage FAQs</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" class="btn btn-primary" href="DocumentServlet">Manage Documents</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="prepDropdown" role="button" data-bs-toggle="dropdown">IELTS TEST</a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle" href="InsertTest.jsp" >Insert IELTS TEST</a>
+                                        </li>
+                                        <li class="nav-item dropdown">
+                                            <form action="listExam" method="POST">
+                                                <button class="nav-link dropdown-toggle" type="submit">Scoring TEST</button>
+                                            </form>
+                                        </li>
+                                        <li class="nav-item dropdown">
+                                            <form action="topicExam" method="POST">
+                                                <button class="nav-link dropdown-toggle" type="submit">Create Exam</button>
+                                            </form>
+
+                                        </li>
+                                    </ul>
+                                </li>
+
+                            </c:if>
+                            <c:if test = "${sessionScope.user != null && sessionScope.user.role == 1}">
+                                <li class="nav-item dropdown">
+                                    <form action="doExam" method="POST">
+                                        <button class="nav-link dropdown-toggle" type="submit">IELTS TEST</button>
+                                    </form>
+                                </li>
+                            </c:if>
+
                         </ul>
                         <li class="nav-item ">
                             <ul class="navbar-nav me-auto">

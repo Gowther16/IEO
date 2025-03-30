@@ -34,28 +34,26 @@
                     <% if (request.getAttribute("error") != null) { %>
                     <p class="text-danger"><%= request.getAttribute("errorLogin") %></p>
                     <% } %>
-                    <input type="text" id="username" name="username" placeholder="Username" autocomplete="off" required>
-                    <input type="email" id="email" name="email" placeholder="Email" autocomplete="off" required>
-
                     <% if (request.getAttribute("errorEmail") != null) { %>
                     <p class="text-danger"><%= request.getAttribute("errorEmail") %></p>
                     <% } %>
+                    <% if (request.getAttribute("errorPass") != null) { %>
+                    <p class="text-danger"><%= request.getAttribute("errorPass") %></p>
+                    <% } %>
+                    <% if (request.getAttribute("errorLongPass") != null) { %>
+                    <p class="text-danger"><%= request.getAttribute("errorLongPass") %></p>
+                    <% } %>
 
+                    <input type="text" id="username" name="username" placeholder="Username" autocomplete="off" required>
+                    <input type="email" id="email" name="email" placeholder="Email" autocomplete="off" required>
                     <div class="password-container">
                         <input type="password" id="password" class="password-input" name="password" placeholder="Password" autocomplete="off" required>
                         <i class="far fa-eye" id="togglePassword"></i>
                     </div>
-
                     <div class="password-container">
                         <input type="password" id="confirmPassword" class="password-input" name="confirmPassword" placeholder="Confirm Password" autocomplete="off" required>
                         <i class="far fa-eye" id="toggleConfirmPassword"></i>
                     </div>
-
-                    <% if (request.getAttribute("errorPass") != null) { %>
-                    <p class="text-danger"><%= request.getAttribute("errorPass") %></p>
-                    <% } %>
-
-
                     <input type="submit" class="signup-btn" value="Register">
                 </form>
                 <!-- Login Link -->

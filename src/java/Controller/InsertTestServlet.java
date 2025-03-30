@@ -102,54 +102,58 @@ public class InsertTestServlet extends HttpServlet {
             int readingId = readingDAO.InsertReading(topicId, readingDuration, readingTitle, readingContent);
 
             Questions_ReadingDAO qrDAO = new Questions_ReadingDAO();
-            int questionCountR = countQuestions(request, "questionCountR_");
+            int questionCountR = countQuestions(request, "questionTextR_");
             for (int i = 1; i <= questionCountR; i++) {
                 String questionText = request.getParameter("questionTextR_" + i);
                 if (questionText != null && !questionText.isEmpty()) {
-                    String optionCountStr = request.getParameter("optionCountR_" + i);
-                    int optionCount = Integer.parseInt(optionCountStr);
-                    String explanation ="";
-                    String options = null;
+                    int optionCount = countAnswerOptions(request, "answerOptionR", i);
+                    String explanation = request.getParameter("explanationR_"+i);
+                    StringBuilder options = new StringBuilder();
                     for (int j = 0; j < optionCount; j++) {
                         String option = request.getParameter("answerOptionR_" + i + "_" + j);
-                        if (j == 0) {
-                            options.concat(option);
-                        } else {
-                            options.concat("|" + option);
+                        if (option == null) {
+                            option = "";
                         }
+                        if (j > 0) {
+                            options.append("|");
+                        }
+                        options.append(option);
                     }
+                    String optionsStr = options.toString();
                     String correctAnswerStr = request.getParameter("correctAnswerR_" + i);
-                    qrDAO.InsertQuestions_Reading(questionText, options, correctAnswerStr, explanation, readingId);
+                    qrDAO.InsertQuestions_Reading(questionText, optionsStr, correctAnswerStr, explanation, readingId);
                 }
             }
 
         }
 
         ListeningDAO listeningDAO = new ListeningDAO();
-        String listeningFile = request.getParameter("listeningFile");
+        String listeningFile = request.getParameter("video");
         String listeningDurationStr = request.getParameter("listeningDuration");
         int listeningDuration = Integer.parseInt(listeningDurationStr);
         int listeningId = listeningDAO.InsertListening(topicId, 30, listeningFile);
 
         Questions_Listening_ChooseAnswerDAO qlcDAO = new Questions_Listening_ChooseAnswerDAO();
-        int questionCountL = countQuestions(request, "questionCountL_");
+        int questionCountL = countQuestions(request, "questionTextL_");
         for (int i = 1; i <= questionCountL; i++) {
             String questionText = request.getParameter("questionTextL_" + i);
             if (questionText != null && !questionText.isEmpty()) {
-                String optionCountStr = request.getParameter("optionCountL_" + i);
-                int optionCount = Integer.parseInt(optionCountStr);
-                String explanation ="";
-                String options = null;
+                int optionCount = countAnswerOptions(request, "answerOptionL", i);
+                String explanation = request.getParameter("explanationL_"+i);
+                StringBuilder options = new StringBuilder();
                 for (int j = 0; j < optionCount; j++) {
-                    String option = request.getParameter("answerOptionL_" + i + "_" + j);
-                    if (j == 0) {
-                        options.concat(option);
-                    } else {
-                        options.concat("|" + option);
+                    String option = request.getParameter("answerOptionR_" + i + "_" + j);
+                    if (option == null) {
+                        option = "";
                     }
+                    if (j > 0) {
+                        options.append("|");
+                    }
+                    options.append(option);
                 }
+                String optionsStr = options.toString();
                 String correctAnswerStr = request.getParameter("correctAnswerL_" + i);
-                qlcDAO.InsertQuestions_Listening_ChooseAnswer(questionText, options, correctAnswerStr, explanation, listeningId);
+                qlcDAO.InsertQuestions_Listening_ChooseAnswer(questionText, optionsStr, correctAnswerStr, explanation, listeningId);
             }
         }
 
@@ -196,7 +200,14 @@ public class InsertTestServlet extends HttpServlet {
         }
         return count;
     }
-
+    private int countAnswerOptions(HttpServletRequest request, String prefix, int questionIndex) {
+    int count = 0;
+    
+    while (request.getParameter(prefix + "_" + questionIndex + "_" + (count + 1)) != null) {
+        count++;
+    }
+    return count;
+}
     /**
      * Returns a short description of the servlet.
      *

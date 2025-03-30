@@ -3,10 +3,11 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Create Exam</title>
+        <title>Topic Exam</title>
 
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -25,35 +26,41 @@
 
         <!-- Custom CSS -->
         <link rel="stylesheet" href="css/styleindex.css">
-        <link rel="stylesheet" href="css/taketest.css">
+        <<link rel="stylesheet" href="css/scoring.css"/>
     </head>
     <body>
         <jsp:include page="Menu.jsp"></jsp:include>
         <%--<jsp:include page="Popup.jsp" />--%>
-
-        <div id="test">
-            <form action="finishCreate" method="POST">
-                <h2>Create Exam</h2>
-                <!-- Hidden field không hiển thị nên không cần wrapper -->
-                <input type="hidden" name="topic_id" value="${topic_id}"/>
-                <table>
+        <h2>List Exam</h2>
+        <h3>Please choose the topic before  add new exam</h3>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover table-bordered">
+                <thead class="table-dark">
                     <tr>
-                        <th><label for="test">Test:</label></th>
-                        <th><input id="test" name="test" type="text" required/></th>
+                        <th>Topic Exam</th>
+                        <th>Create by</th>
+                        <th>Action</th>
                     </tr>
-                    <tr>
-                        <td><label for="description">Description:</label></td>
-                        <td><input id="description" name="description" type="text" required/></td>
+                </thead>
+                <tbody>
+                    <c:forEach var="r" items="${lte}">
+                        <tr>
+                    <form action="createExam" method="POST">
+                        <td>
+                            <input type="hidden" name="topic_id" value="${r.getTopic()}">${r.getTopic()}
+                        </td>
+                        <td>
+                             ${r.getCreator()}
+                        </td>
+                        <td>
+                            <button type="submit">Choose Topic</button>
+                        <td>
+                    </form>
                     </tr>
-                    <tr>
-                        <td><label for="time">Time:</label></td>
-                        <td><input id="time" name="time" type="number" required/></td>
-                    </tr>
-                </table>
-                <button type="submit">Create Exam</button>
-            </form>
+                </c:forEach>
+                </tbody>
+            </table>
         </div>
-
         <!--Footer-->
         <jsp:include page="Footer.jsp"></jsp:include>
         <script src="js/main.js"></script>

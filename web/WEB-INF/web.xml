@@ -85,6 +85,18 @@
         <servlet-name>finishScore</servlet-name>
         <servlet-class>Controller.FinishScoreServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>topicExam</servlet-name>
+        <servlet-class>Controller.TopicExamServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>createExam</servlet-name>
+        <servlet-class>Controller.CreateExamServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>finishCreate</servlet-name>
+        <servlet-class>Controller.FinishCreateServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -157,7 +169,7 @@
         <servlet-name>insertTest</servlet-name>
         <url-pattern>/insertTest</url-pattern>
     </servlet-mapping>
-<!--        <session-config>
+    <!--        <session-config>
         <session-timeout>100</session-timeout>
     </session-config>-->
     <!-- Welcome File -->
@@ -200,6 +212,18 @@
     <servlet-mapping>
         <servlet-name>finishScore</servlet-name>
         <url-pattern>/finishScore</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>topicExam</servlet-name>
+        <url-pattern>/topicExam</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>createExam</servlet-name>
+        <url-pattern>/createExam</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>finishCreate</servlet-name>
+        <url-pattern>/finishCreate</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>Home.jsp</welcome-file>

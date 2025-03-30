@@ -41,6 +41,12 @@ public class RegisterServlet extends HttpServlet {
             return;
         }
         
+        if (password.length() < 8 || password.length() > 16) {
+            request.setAttribute("errorLongPass", "Password must be between 8 and 16 characters.");
+            request.getRequestDispatcher("Register.jsp").forward(request, response);
+            return; 
+        }
+        
         try {
             UserDAO userDAO = new UserDAO();
             userDAO.register(username, password, email);

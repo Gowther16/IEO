@@ -142,6 +142,12 @@ public class ResetPasswordServlet extends HttpServlet {
             return;
         }
 
+        if (password.length() < 8 || password.length() > 16) {
+            request.setAttribute("errorLongPass", "Password must be between 8 and 16 characters.");
+            request.getRequestDispatcher("resetPassword.jsp").forward(request, response);
+            return;
+        }
+
         if (service.isExpireTime(tokenForgetPassword.getExpiryTime())) {
             request.setAttribute("mess", "This token has expired!");
             request.getRequestDispatcher("requestPassword.jsp").forward(request, response);

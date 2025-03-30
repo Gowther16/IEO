@@ -43,8 +43,9 @@ public class WritingDAO {
         }
         return list;
     }
-    public void InsertWriting(int topic_id,int duration,String Title,String content) {
+    public int InsertWriting(int topic_id,int duration,String Title,String content) {
         String sql = "INSERT INTO [Writing]  VALUES (?,?,?,?)";
+        int write =0;
         try{
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -52,6 +53,13 @@ public class WritingDAO {
             ps.setInt(2, duration);
             ps.setString(3, Title);
             ps.setString(4, content);
+            int result = ps.executeUpdate();
+            if (result > 0) {
+                rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    write = rs.getInt(1);
+                }
+            }
         }catch(Exception e){
             System.out.println(e.getMessage());
         }finally{
@@ -63,5 +71,6 @@ public class WritingDAO {
                 System.out.println("Error closing connections: " + e.getMessage());
             }
         }
+        return write;
     }
 }

@@ -28,6 +28,11 @@
                     <%= request.getAttribute("mess") %>  
                 </div>
                 <% } %>
+                 <% if (request.getAttribute("errorLongPass") != null) { %>
+                <div class="alert alert-danger">
+                    <%= request.getAttribute("errorLongPass") %>  
+                </div>
+                <% } %>
                 <input type="email" id="email" name="email" value="${email}" placeholder="Email" required>
                 
                 <div class="password-container">
